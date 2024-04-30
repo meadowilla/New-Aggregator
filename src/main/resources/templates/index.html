@@ -8,7 +8,7 @@
 <body>
     <div th:each="data : ${news}">
         <div>
-            <h3 th:text="${data.getTitle}"></h3>
+            <h3 th:text="${data.getTitle}" style="color: blue"></h3>
             <p th:text="${data.getDescription}"></p>
             <p>Author: <span th:text="${data.getAuthor}"></span></p>
             <p>Date: <span th:text="${data.getDate}"></span></p>
