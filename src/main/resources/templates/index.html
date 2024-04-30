@@ -6,16 +6,16 @@
     <title>Tab test nà</title>
 </head>
 <body>
-    <ul th:each="data : ${news}">
-        <li th:text="${data.getLink}"></li>
-        <li th:text="${data.getWebsite}"></li>
-        <li th:text="${data.getTitle}"></li>
-        <li th:text="${data.getDescription}"></li>
-        <li th:text="${data.getAuthor}"></li>
-        <li th:text="${data.getDate}"></li>
-        <li th:text="${data.getType}"></li>
-        <li th:text="${data.getKeywords}"></li>
-    <div>----------------------------------------------</div>
-    </ul>
+    <div th:each="data : ${news}">
+        <div>
+            <h3 th:text="${data.getTitle}"></h3>
+            <p th:text="${data.getDescription}"></p>
+            <p>Author: <span th:text="${data.getAuthor}"></span></p>
+            <p>Date: <span th:text="${data.getDate}"></span></p>
+            <p>Type: <span th:text="${data.getType}"></span></p>
+            <p>Keywords: <span th:text="${data.getKeywords}"></span></p>
+        </div>
+        <hr>
+    </div>
 </body>
 </html>

@@ -13,8 +13,8 @@ public class GetData {
     public List<Data> getData() {
         String csvFile = "src/main/resources/blockchain.csv";
         List<Data> d = new ArrayList<Data>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            br.readLine();
             Iterable<CSVRecord> csvParser = CSVFormat.DEFAULT.parse(br);
                 for (CSVRecord csvRecord : csvParser) {
                     Data data = new Data();
