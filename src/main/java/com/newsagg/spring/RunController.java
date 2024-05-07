@@ -34,8 +34,8 @@ public class RunController {
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject("http://localhost:5000/search?keyword=" + keyword, String.class);
         
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(result);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(result);
         
         List<Data> d = new ArrayList<Data>();
         for (JsonNode node : jsonNode) {
