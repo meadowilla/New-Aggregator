@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Page</title>
+</head>
+<body>
+    <h1>Search Page</h1>
+    <form action="/search" method="post">
+        <input type="text" name="keyword" placeholder="Enter keyword">
+        <button type="submit">Search</button>
+    </form>
+    <div th:if="${result}">
+        <h2>Search Result</h2>
+        <div th:each="data : ${result}">
+            <div>
+                <h3 th:text="${data.getTitle}" style="color: blue"></h3>
+                <p th:text="${data.getDescription}"></p>
+                <p>Author: <span th:text="${data.getAuthor}"></span></p>
+                <p>Date: <span th:text="${data.getDate}"></span></p>
+                <p>Type: <span th:text="${data.getType}"></span></p>
+                <p>Keywords: <span th:text="${data.getKeywords}"></span></p>
+            </div>
+            <hr>
+        </div>
+    </div>
+</body>
+</html>
