@@ -22,6 +22,7 @@ A step by step series of examples that tell you how to get a development environ
 2. Navigate to the project directory
 3. Run `mvnw spring-boot:run` to start the Spring Boot application
 4. Run `python Indexing.py` to start the Python part
+5. You can then access the application in your browser by navigating to `http://localhost:8080/search`
 
 ## Built With
 
