@@ -33,7 +33,7 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Authors
 
-* **Your Name** - *Initial work* - [YourGithubUsername](https://github.com/YourGithubUsername)
+* **Sy** - *Create spirng boot, manage to connect modules* - [quansy](https://github.com/for-Ely)
 
 ## Acknowledgments
 
