@@ -10,7 +10,7 @@ import org.apache.commons.csv.*;
 public class GetData {
     public List<Data> getData() {
         String csvFile = "src/main/resources/blockchain.csv";
-        List<Data> d = new ArrayList<Data>();
+        List<Data> dataList = new ArrayList<Data>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             br.readLine();
             Iterable<CSVRecord> csvParser = CSVFormat.DEFAULT.parse(br);
@@ -24,12 +24,12 @@ public class GetData {
                 data.setDate(csvRecord.get(5));
                 data.setType(csvRecord.get(6));
                 data.setKeywords(csvRecord.get(7));
-                d.add(data);
+                dataList.add(data);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return d;
+        return dataList;
     }
 }

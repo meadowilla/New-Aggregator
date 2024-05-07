@@ -24,12 +24,14 @@ public class RunController {
         model.addAttribute("news", gd.getData());
         return "index";
     }
-    @GetMapping("/search")
-    public String showSearchForm() {
+    @GetMapping("/home")
+    public String showSearchForm(ModelMap model) {
+    GetData getData = new GetData();
+    model.addAttribute("news", getData.getData());
         return "search";
     }
 
-    @PostMapping("/search")
+    @PostMapping("/home")
     public String performSearch(@RequestParam("keyword") String keyword, ModelMap model) throws JsonMappingException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject("http://localhost:5000/search?keyword=" + keyword, String.class);
@@ -37,7 +39,7 @@ public class RunController {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(result);
         
-        List<Data> d = new ArrayList<Data>();
+        List<Data> dataList = new ArrayList<Data>();
         for (JsonNode node : jsonNode) {
             Data data = new Data();
             data.setLink(node.get(1).asText());
@@ -48,9 +50,14 @@ public class RunController {
             data.setDate(node.get(2).asText());
             data.setType(node.get(4).asText());
             // data.setKeywords(node.get("keywords").asText());
-            d.add(data);
+            dataList.add(data);
         }
-        model.addAttribute("result", d);
+        model.addAttribute("result", dataList);
         return "search";
     }
+    @GetMapping("/test")
+    public String testPage() {
+        return "test";
+    }
+    
 }

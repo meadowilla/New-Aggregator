@@ -4,8 +4,8 @@
     <title>Search Page</title>
 </head>
 <body>
-    <h1>Search Page</h1>
-    <form action="/search" method="post">
+    <h2>Search</h2>
+    <form action="/home" method="post">
         <input type="text" name="keyword" placeholder="Enter keyword">
         <button type="submit">Search</button>
     </form>
@@ -13,7 +13,25 @@
         <h2>Search Result</h2>
         <div th:each="data : ${result}">
             <div>
-                <h3 th:text="${data.getTitle}" style="color: blue"></h3>
+                <a th:href="${data.getLink}">
+                    <h3 th:text="${data.getTitle}" style="color: blue"></h3>
+                </a>                
+                <p th:text="${data.getDescription}"></p>
+                <p>Author: <span th:text="${data.getAuthor}"></span></p>
+                <p>Date: <span th:text="${data.getDate}"></span></p>
+                <p>Type: <span th:text="${data.getType}"></span></p>
+                <p>Keywords: <span th:text="${data.getKeywords}"></span></p>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div th:unless="${result}">
+        <h2>News</h2>
+        <div th:each="data : ${news}">
+            <div>
+                <a th:href="${data.getLink}">
+                    <h3 th:text="${data.getTitle}" style="color: blue"></h3>
+                </a>                
                 <p th:text="${data.getDescription}"></p>
                 <p>Author: <span th:text="${data.getAuthor}"></span></p>
                 <p>Date: <span th:text="${data.getDate}"></span></p>
