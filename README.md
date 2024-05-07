@@ -34,6 +34,7 @@ A step by step series of examples that tell you how to get a development environ
 ## Authors
 
 * **Sy** - *Create spirng boot, manage to connect modules* - [quansy](https://github.com/for-Ely)
+* **Awesome Teammate from IT-E15** - *Make modules and handle many hard works*
 
 ## Acknowledgments
 
