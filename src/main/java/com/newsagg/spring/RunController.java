@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class RunController {
-
     @GetMapping("/hello")
     public String hello(ModelMap model) {
         GetData gd = new GetData();
