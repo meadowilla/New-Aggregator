@@ -20,9 +20,10 @@ A step by step series of examples that tell you how to get a development environ
 
 1. Clone the repository
 2. Navigate to the project directory
-3. Run `mvnw spring-boot:run` to start the Spring Boot application
-4. Run `python Indexing.py` to start the Python part
-5. You can then access the application in your browser by navigating to `http://localhost:8080/search`
+4. Run `mvnw spring-boot:run` to start the Spring Boot application
+5. Run `python Flask.py` to start the Python part
+6. You can then access the application in your browser by navigating to `http://localhost:8080/home`
+   
 
 ## Built With
 
@@ -32,7 +33,8 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Authors
 
-* **Your Name** - *Initial work* - [YourGithubUsername](https://github.com/YourGithubUsername)
+* **Sy** - *Create spirng boot, manage to connect modules* - [quansy](https://github.com/for-Ely)
+* **Awesome Teammate from IT-E15** - *Make modules and handle many hard works*
 
 ## Acknowledgments
 
