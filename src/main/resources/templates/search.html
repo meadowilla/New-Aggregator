@@ -28,17 +28,17 @@
     <div th:unless="${result}">
         <h2>News</h2>
         <div th:each="data, iterStat : ${news}" th:if="${iterStat.index < 10}">
-                <a th:href="${data.getLink}">
-                    <h3 th:text="${data.getTitle}" style="color: blue"></h3>
-                </a>                
-                <p th:text="${data.getDescription}"></p>
-                <p>Author: <span th:text="${data.getAuthor}"></span></p>
-                <p>Date: <span th:text="${data.getDate}"></span></p>
-                <p>Type: <span th:text="${data.getType}"></span></p>
-                <p>Keywords: <span th:text="${data.getKeywords}"></span></p>
-            </div>
-            <hr>
+            <a th:href="${data.getLink}">
+                <h3 th:text="${data.getTitle}" style="color: blue"></h3>
+            </a>                
+            <p th:text="${data.getDescription}"></p>
+            <p>Author: <span th:text="${data.getAuthor}"></span></p>
+            <p>Date: <span th:text="${data.getDate}"></span></p>
+            <p>Type: <span th:text="${data.getType}"></span></p>
+            <p>Keywords: <span th:text="${data.getKeywords}"></span></p>
         </div>
+        <hr>
     </div>
+</div>
 </body>
 </html>

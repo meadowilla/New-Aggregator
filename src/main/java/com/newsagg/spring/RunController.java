@@ -53,10 +53,7 @@ public class RunController {
         }
         model.addAttribute("result", dataList);
         return "search";
-    }
-    @GetMapping("/test")
-    public String testPage() {
-        return "test";
+
     }
     
 }
