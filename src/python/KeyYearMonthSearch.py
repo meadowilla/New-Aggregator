@@ -97,9 +97,9 @@ def key_year_search(search_key, year):
  
 def key_year_month_search(search_key, year, month):
     if month =="" and year == "":
-        key_search(search_key)
+        return key_search(search_key)
     elif month == "":
-        key_year_search(search_key, year)
+        return key_year_search(search_key, year)
     else:
         file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
         key_documents, rows = read_csv(file_path) # Maybe you need to change the idx of rows to align with your csv file
