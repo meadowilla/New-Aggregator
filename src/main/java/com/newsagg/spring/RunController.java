@@ -31,26 +31,35 @@ public class RunController {
     }
 
     @PostMapping("/home")
-    public String performSearch(@RequestParam("keyword") String keyword, ModelMap model) throws JsonMappingException, JsonProcessingException {
+    public String performSearch(@RequestParam("searchkey") String searchkey,
+                                @RequestParam("year") String year,
+                                @RequestParam("month") String month,
+                                ModelMap model) throws JsonMappingException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject("http://localhost:5000/search?keyword=" + keyword, String.class);
-        
+        String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
+        if (result == null) {
+            int resultCount = 0;
+            model.addAttribute("resultCount", resultCount);
+            return "search";
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(result);
         
         List<Data> dataList = new ArrayList<Data>();
         for (JsonNode node : jsonNode) {
-            Data data = new Data();
-            data.setLink(node.get(1).asText());
-            // data.setWebsite(node.get("none").asText());
-            data.setTitle(node.get(0).asText());
-            // data.setDescription(node.get("description").asText());
-            data.setAuthor(node.get(3).asText());
-            data.setDate(node.get(2).asText());
-            data.setType(node.get(4).asText());
-            // data.setKeywords(node.get("keywords").asText());
-            dataList.add(data);
+                Data data = new Data();
+                data.setLink(node.get(0).asText() );
+                data.setSourceWebsite(node.get(1).asText());
+                data.setWebsite(node.get(2).asText());
+                data.setTitle(node.get(3).asText());
+                data.setDescription(node.get(4).asText());
+                data.setAuthor(node.get(5).asText());
+                data.setPublishedDate(node.get(6).asText());
+                data.setType(node.get(7).asText());
+                data.setImage(node.get(8).asText());
+                dataList.add(data);
         }
+        model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
         return "search";
 
