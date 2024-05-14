@@ -1,14 +1,13 @@
 package com.newsagg.spring;
-
 public class Data {
     private String link;
+    private String sourcewebsite;
     private String website;
     private String title;
     private String description;
     private String author;
-    private String date;
+    private String publisheddate;
     private String type;
-    private String keywords;
 
     public String getLink() {
         return this.link;
@@ -16,6 +15,14 @@ public class Data {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getSourceWebsite() {
+        return this.sourcewebsite;
+    }
+
+    public void setSourceWebsite(String sourcewebsite) {
+        this.sourcewebsite = sourcewebsite;
     }
 
     public String getWebsite() {
@@ -50,12 +57,12 @@ public class Data {
         this.author = author;
     }
 
-    public String getDate() {
-        return this.date;
+    public String getPublishedDate() {
+        return this.publisheddate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setPublishedDate(String publisheddate) {
+        this.publisheddate = publisheddate;
     }
 
     public String getType() {
@@ -66,12 +73,12 @@ public class Data {
         this.type = type;
     }
 
-    public String getKeywords() {
-        return this.keywords;
+    public String getImage() {
+        return this.image;
     }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
+    public void setImage(String image) {
+        this.image = image;
     }
-    
+    private String image;
 }
