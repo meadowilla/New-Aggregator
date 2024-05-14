@@ -1,0 +1,38 @@
+<h5>The number of result found is: <span th:text="${resultCount}"></span></h5>
+<div th:each="data : ${result}">
+    <div>
+        <a th:href="${data.getLink}">
+            <h3>Title: <span th:text="${data.getTitle}"></span></h3>
+        </a>                
+        <p th:text="${data.getDescription}"></p>
+        <p>Author: <span th:text="${data.getAuthor}"></span></p>
+        <p>Date: <span th:text="${data.getPublishedDate}"></span></p>
+        <p>Type: <span th:text="${data.getType}"></span></p>
+    </div>
+    <hr>
+</div>
+
+<!-- Pagination links -->
+<div>
+    <a th:if="${currentPage > 1}" th:href="@{/search(page=${currentPage - 1}, searchkey=${searchkey})}">Previous</a>
+    <span th:text="${currentPage}"></span>
+    <a th:if="${currentPage < totalPages}" th:href="@{/search(page=${currentPage + 1}, searchkey=${searchkey})}">Next</a>
+</div>
+
+<div th:unless="${result}">
+    <h2>News</h2>
+    <div th:each="data, iterStat : ${news}" th:if="${iterStat.index < 50}">
+        <div class="container">
+            <a th:href="${data.getLink}">
+                <h3>Title: <span th:text="${data.getTitle}"></span></h3>
+            </a>                
+            <p>Description: <span th:text="${data.getDescription}"></span></p>
+            <p>Author: <span th:text="${data.getAuthor}"></span></p>
+            <p>Date: <span th:text="${data.getPublishedDate}"></span></p>
+            <p>Type: <span th:text="${data.getType}"></span></p>
+        </div>
+        <hr>
+    </div>
+</div>
+</body>
+</html>

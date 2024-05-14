@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Search Page</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Search Page</title>
+    </head>
 <body>
-    <h2>Search</h2>
     <form action="/home" method="post">
         <input type="text" name="searchkey" placeholder="Enter keyword">
         <select name="year">
@@ -39,7 +40,7 @@
         <div th:each="data : ${result}">
             <div>
                 <a th:href="${data.getLink}">
-                    <h3 th:text="${data.getTitle}" style="color: blue"></h3>
+                    <h3>Title: <span th:text="${data.getTitle}"></span></h3>
                 </a>                
                 <p th:text="${data.getDescription}"></p>
                 <p>Author: <span th:text="${data.getAuthor}"></span></p>
@@ -52,13 +53,15 @@
     <div th:unless="${result}">
         <h2>News</h2>
         <div th:each="data, iterStat : ${news}" th:if="${iterStat.index < 50}">
-            <a th:href="${data.getLink}">
-                <h3 th:text="${data.getTitle}" style="color: blue"></h3>
-            </a>                
-            <p th:text="${data.getDescription}"></p>
-            <p>Author: <span th:text="${data.getAuthor}"></span></p>
-            <p>Date: <span th:text="${data.getPublishedDate}"></span></p>
-            <p>Type: <span th:text="${data.getType}"></span></p>
+            <div class="container">
+                <a th:href="${data.getLink}">
+                    <h3>Tittle: <span th:text="${data.getTitle}"></span></h3>
+                </a>                
+                <p>Description: <span th:text="${data.getDescription}"></span></p>
+                <p>Author: <span th:text="${data.getAuthor}"></span></p>
+                <p>Date: <span th:text="${data.getPublishedDate}"></span></p>
+                <p>Type: <span th:text="${data.getType}"></span></p>
+            </div>
         </div>
         <hr>
     </div>
