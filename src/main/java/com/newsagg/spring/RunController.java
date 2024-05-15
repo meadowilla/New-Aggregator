@@ -44,11 +44,11 @@ public class RunController {
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
-        if (result == null) {
-            int resultCount = 0;
-            model.addAttribute("resultCount", resultCount);
-            return "search";
-        }
+        // if (result == null) {
+        //     int resultCount = 0;
+        //     model.addAttribute("resultCount", resultCount);
+        //     return "search";
+        // }
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(result);
         
@@ -66,6 +66,7 @@ public class RunController {
                 data.setImage(node.get(8).asText());
                 dataList.add(data);
         }
+        model.addAttribute("searchkey", searchkey);
         model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
         return "search";
