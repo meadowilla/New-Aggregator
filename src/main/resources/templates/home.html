@@ -19,22 +19,38 @@
         <h2 class="section-title">Search Result
         <form class="result-option" action="/home" method="post">
             <input type="hidden" name="searchkey" th:value="${searchkey}" />
-            <select name="year" id="year-select" onchange="this.form.submit()">
+            <div>
+            <label class="sort">Time Filter</label>
+            <select name="year" onchange="this.form.submit()">
                 <option th:value="${year}" th:text="${year}"></option>
-                <option value="">None</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
+                <option value="year">None</option>
+                <th:block th:each="yearItem : ${yearlist}">
+                    <option th:value="${yearItem}" th:text="${yearItem}"></option>
+                </th:block>
             </select>
+            <select name="month" onchange="this.form.submit()">
+                <option th:value="${month}" th:text="${month}"></option>
+                <option value="month">None</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+            </div>
         </form>
         </h2>
 
 
 
-        <p class="result-count">The number of result found for <strong><span th:text="${searchkey}"></span></strong> is: <span th:text="${resultCount}"></span></p>
+        <p class="result-count">The number of results found for <strong><span th:text="${searchkey}"></span></strong> is: <span th:text="${resultCount}"></span></p>
         <div class="news-item" th:each="data : ${result}">
             <a class="news-link" th:href="${data.getLink}">
             <div class="news-content">

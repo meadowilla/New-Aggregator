@@ -7,6 +7,12 @@ body {
     padding: 0;
 }
 
+.sort {
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+    font-size: 12px;
+}
+
 .search-button {
     background-color: #6a6a6a98;
     color: #ffffff; /* Light text */
