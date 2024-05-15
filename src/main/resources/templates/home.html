@@ -43,6 +43,8 @@
                     <th:block th:if="${year != 'Year'}">
                         <select name="month" id="monthSelect" onchange="this.form.submit()">
                             <option th:value="${month}" th:text="${month}"></option>
+                            <option value="Month">None</option>
+
                             <th:block th:if="${month != '01'}">
                                 <option value="01">January</option>
                             </th:block>
