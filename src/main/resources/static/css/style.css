@@ -7,26 +7,43 @@ body {
     padding: 0;
 }
 
+.search-button {
+    background-color: #6a6a6a98;
+    color: #ffffff; /* Light text */
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 0px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #464646b7;
+}
+
 .search-box {
+    outline: none;
+    border: none;
     align-self: left;
-    width: 60%;
+    width:40%;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 10px;
-    background-color: #1e1e1e;
+    background-color: #6a6a6a98;
     color: #ffffff; /* Light text */
-    margin-top: 10px;
+    margin: 10px;
+}
 
+.search-box:hover {
+    background-color: #464646b7;
 }
 
 .search-form {
-    width: 45%;
     margin: 0 auto;
     border-radius: 10px;
-    background-color: #c3c6c4;
     text-align: center;
     margin-top: 10px;
-    padding: 10px;
 }
 .result-section, .news-section {
     padding-left: 0%;
