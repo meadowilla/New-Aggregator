@@ -26,8 +26,8 @@ public class RunController {
         }
     @PostMapping("/home")
     public String performSearch(@RequestParam(value="searchkey", required = false) String searchkey,
-                                @RequestParam(value = "year", defaultValue = "year") String year,
-                                @RequestParam(value = "month", defaultValue = "month") String month,
+                                @RequestParam(value = "year", defaultValue = "Year") String year,
+                                @RequestParam(value = "month", defaultValue = "Month") String month,
                                 @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
          

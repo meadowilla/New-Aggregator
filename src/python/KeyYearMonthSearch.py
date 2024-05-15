@@ -96,9 +96,9 @@ def key_year_search(search_key, year):
     return output_documents
  
 def key_year_month_search(search_key, year, month):
-    if year == "year":
+    if year == "Year":
         return key_search(search_key)
-    elif month == "month":
+    elif month == "Month":
         return key_year_search(search_key, year)
     else:
         file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file

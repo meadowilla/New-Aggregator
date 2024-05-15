@@ -34,13 +34,13 @@
                     </select>
                     <select name="year" id="yearSelect" onchange="this.form.submit()">
                         <option th:value="${year}" th:text="${year}"></option>
-                        <option value="year">None</option>
+                        <option value="Year">None</option>
                         <th:block th:each="yearItem : ${yearlist}">
                             <th:block th:if="${yearItem != year}">
                                 <option th:value="${yearItem}" th:text="${yearItem}"></option>
                         </th:block>
                     </select>
-                    <th:block th:if="${year != 'year'}">
+                    <th:block th:if="${year != 'Year'}">
                         <select name="month" id="monthSelect" onchange="this.form.submit()">
                             <option th:value="${month}" th:text="${month}"></option>
                             <th:block th:if="${month != '01'}">
