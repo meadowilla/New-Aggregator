@@ -6,6 +6,19 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.search-box {
+    align-self: left;
+    width: 60%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #1e1e1e;
+    color: #ffffff; /* Light text */
+    margin-top: 10px;
+
+}
+
 .search-form {
     width: 45%;
     margin: 0 auto;
@@ -13,6 +26,7 @@ body {
     background-color: #c3c6c4;
     text-align: center;
     margin-top: 10px;
+    padding: 10px;
 }
 .result-section, .news-section {
     padding-left: 0%;
