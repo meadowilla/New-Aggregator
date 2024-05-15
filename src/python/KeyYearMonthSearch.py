@@ -107,16 +107,18 @@ def key_year_month_search(search_key, year, month):
         return output_documents
 
 if __name__ == "__main__":
-    file_path = 'data/test_year_search.csv' # Relative Path to your csv file
+    file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
     key_documents, rows = read_csv(file_path) # Maybe you need to change the idx of rows to align with your csv file
 
     search_key = "nft token"
     year = "2023"
     month = "10"
     
-    key_search(search_key, key_documents, rows)
-    key_year_search(search_key, year, key_documents, rows)
-    key_year_month_search(search_key, year, month, key_documents, rows)
+    # key_search(search_key, key_documents, rows)
+    # key_year_search(search_key, year, key_documents, rows)
+    # key_year_month_search(search_key, year, month, key_documents, rows)
+    print(len(key_search("blockchain")))
+    print(len(key_year_search("blockchain", "2024")))
 
 
 
