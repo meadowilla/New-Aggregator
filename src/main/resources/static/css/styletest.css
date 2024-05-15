@@ -5,54 +5,46 @@ body {
 .search-container {
     position: relative;
     display: inline-block;
-    width: 300px;
+    width: 100%;
+    max-width: 600px;
 }
 
 #search-box {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
-.dropdown-content {
+.suggestions {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-item {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    border: none;
-    background: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
     width: 100%;
-    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.dropdown-item:hover {
+.suggestion-item, .config-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover, .config-option:hover {
     background-color: #f1f1f1;
 }
 
-.search-options {
-    margin-top: 10px;
-}
-
-.option-tag {
-    display: inline-block;
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin-right: 5px;
+.config-option input {
+    width: calc(100% - 20px);
+    padding: 5px;
     margin-top: 5px;
-}
-
-.option-tag .remove-tag {
-    margin-left: 10px;
-    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
