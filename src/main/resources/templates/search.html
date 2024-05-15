@@ -4,9 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Search Page</title>
+        <link rel="stylesheet" href="/css/style.css">
     </head>
 <body>
-    <form action="/home" method="post">
+    <form class="search-form" action="/home" method="post">
         <input type="text" name="searchkey" placeholder="Enter keyword">
         <select name="year">
             <option value="">Year</option>
@@ -34,37 +35,35 @@
         </select>
         <button type="submit">Search</button>
     </form>
-    <div th:if="${result}">
-        <h2>Search Result</h2>
-        <h5>The number of result found is: <span th:text="${resultCount}"></span></h5>
-        <div th:each="data : ${result}">
-            <div>
-                <a th:href="${data.getLink}">
-                    <h3>Title: <span th:text="${data.getTitle}"></span></h3>
-                </a>                
-                <p th:text="${data.getDescription}"></p>
-                <p>Author: <span th:text="${data.getAuthor}"></span></p>
-                <p>Date: <span th:text="${data.getPublishedDate}"></span></p>
-                <p>Type: <span th:text="${data.getType}"></span></p>
-            </div>
-            <hr>
-        </div>
-    </div>
-    <div th:unless="${result}">
-        <h2>News</h2>
-        <div th:each="data, iterStat : ${news}" th:if="${iterStat.index < 50}">
-            <div class="container">
-                <a th:href="${data.getLink}">
-                    <h3>Tittle: <span th:text="${data.getTitle}"></span></h3>
-                </a>                
-                <p>Description: <span th:text="${data.getDescription}"></span></p>
-                <p>Author: <span th:text="${data.getAuthor}"></span></p>
-                <p>Date: <span th:text="${data.getPublishedDate}"></span></p>
-                <p>Type: <span th:text="${data.getType}"></span></p>
+    <div class="result-section" th:if="${result}">
+        <h2 class="section-title">Search Result</h2>
+        <p class="result-count">The number of result found for <strong><span th:text="${searchkey}"></span></strong> is: <span th:text="${resultCount}"></span></p>
+        <div class="news-item" th:each="data : ${result}">
+            <div class="news-content">
+                <a class="news-link" th:href="${data.getLink}">
+                    <h3 class="news-title"><span th:text="${data.getTitle}"></span></h3>
+                </a>
+                <p class="news-description" th:text="${data.getDescription}"></p>
+                <p class="news-author">Author: <span th:text="${data.getAuthor}"></span></p>
+                <p class="news-date">Date: <span th:text="${data.getPublishedDate}"></span></p>
+                <p class="news-type">Type: <span th:text="${data.getType}"></span></p>
             </div>
         </div>
-        <hr>
     </div>
-</div>
+    <div class="news-section" th:unless="${result}">
+        <h2 class="section-title">News</h2>
+        <div class="news-item" th:each="data : ${news}">
+            <a class="news-link" th:href="${data.getLink}">
+            <div class="news-content">
+                <img class="news-image" src="demo-image.png" alt="image">
+                <h3 class="news-title"><span th:text="${data.getTitle}"></span></h3>
+                <p class="news-description" th:text="${data.getDescription}"></p>
+                <p class="news-author">Author: <span th:text="${data.getAuthor}"></span></p>
+                <p class="news-date">Date: <span th:text="${data.getPublishedDate}"></span></p>
+                <p class="news-type">Type: <span th:text="${data.getType}"></span></p>
+            </div>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
