@@ -20,6 +20,7 @@
         <form class="result-option" action="/home" method="post">
             <input type="hidden" name="searchkey" th:value="${searchkey}" />
             <select name="year" id="year-select" onchange="this.form.submit()">
+                <option th:value="${year}" th:text="${year}"></option>
                 <option value="">None</option>
                 <option value="2019">2019</option>
                 <option value="2020">2020</option>
