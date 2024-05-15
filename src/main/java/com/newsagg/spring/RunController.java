@@ -28,6 +28,7 @@ public class RunController {
     public String performSearch(@RequestParam(value="searchkey", required = false) String searchkey,
                                 @RequestParam(value = "year", defaultValue = "year") String year,
                                 @RequestParam(value = "month", defaultValue = "month") String month,
+                                @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
          
         RestTemplate restTemplate = new RestTemplate();
@@ -50,6 +51,11 @@ public class RunController {
                 data.setImage(node.get(8).asText());
                 dataList.add(data);
         }
+        if (newestoldest.equals("Oldest")) {
+            dataList.sort(Comparator.comparing(Data::getPublishedDate));
+        } else {
+            dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
+        }
 
         GetData getData = new GetData();
         List<String> yearlist = new ArrayList<String>();
@@ -59,7 +65,7 @@ public class RunController {
                 yearlist.sort(Comparator.reverseOrder());
             }
         }
-
+        model.addAttribute("newestoldest", newestoldest);
         model.addAttribute("yearlist", yearlist);
         model.addAttribute("searchkey", searchkey);
         model.addAttribute("year", year);
