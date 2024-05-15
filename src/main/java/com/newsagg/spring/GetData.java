@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.csv.*;
 // Link,Source website,Website,Title,Description,Author,Published date,Type,Image
@@ -27,6 +28,7 @@ public class GetData {
                 data.setImage(csvRecord.get(8));
                 dataList.add(data);
             }
+        dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         } catch (IOException e) {
             e.printStackTrace();
         }

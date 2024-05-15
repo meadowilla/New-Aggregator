@@ -102,15 +102,15 @@
     </div>
     <div class="news-section" th:unless="${result}">
         <h2 class="section-title">News</h2>
-        <div class="news-item" th:each="data : ${news}">
-            <a class="news-link" th:href="${data.getLink}">
-            <div class="news-content">
-                <img class="news-image" th:src="${data.getImage}" alt="image">
-                <h3 class="news-title"><span th:text="${data.getTitle}"></span></h3>
-                <p class="news-description" th:text="${data.getDescription}"></p>
-                <p id="by" class="news-date-author"> <span class="news-date" th:text="${data.getPublishedDate}"></span> • by <span class="news-author" th:text="${data.getAuthor}"></span></p>
-                <p id="from">from <span class="news-source-website" th:text="${data.getSourceWebsite}"></span></p>
-            </div>
+        <div class="news-item" th:each="index : ${#numbers.sequence(0, 19)}">
+            <a class="news-link" th:href="${news[index].getLink}">
+                <div class="news-content">
+                    <img class="news-image" th:src="${news[index].getImage}" alt="image">
+                    <h3 class="news-title"><span th:text="${news[index].getTitle}"></span></h3>
+                    <p class="news-description" th:text="${news[index].getDescription}"></p>
+                    <p id="by" class="news-date-author"> <span class="news-date" th:text="${news[index].getPublishedDate}"></span> • by <span class="news-author" th:text="${news[index].getAuthor}"></span></p>
+                    <p id="from">from <span class="news-source-website" th:text="${news[index].getSourceWebsite}"></span></p>
+                </div>
             </a>
         </div>
     </div>
