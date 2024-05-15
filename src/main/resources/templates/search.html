@@ -57,14 +57,12 @@
             <a class="news-link" th:href="${data.getLink}">
             <div class="news-content">
                 <img class="news-image" th:src="${data.getImage}" alt="image">
-                <a class="news-website" th:href="data.getWebsite" style="text-decoration: none;">
-                    <p class="news-source-website" th:text="${data.getSourceWebsite}"></p>
-                </a>
                 <!--<img class="news-image" src="demo-image.png" alt="image">-->
                 <!--<img class="news-image" src="https://cdn.discordapp.com/attachments/692310768695377923/1240239126767210506/image.png?ex=6645d632&is=664484b2&hm=c0e52c520c8e92457b33610e04bcd23b90b0bbe68096876d9587c0fdc1bc0fb5&" alt="image">-->
                 <h3 class="news-title"><span th:text="${data.getTitle}"></span></h3>
                 <p class="news-description" th:text="${data.getDescription}"></p>
-                <p class="news-date-author"> <span class="news-date" th:text="${data.getPublishedDate}"></span> • <span class="news-author" th:text="${data.getAuthor}"></span></p>
+                <p id="by" class="news-date-author"> <span class="news-date" th:text="${data.getPublishedDate}"></span> • by <span class="news-author" th:text="${data.getAuthor}"></span></p>
+                <p id="from">from <span class="news-source-website" th:text="${data.getSourceWebsite}"></span></p>
             </div>
             </a>
         </div>
