@@ -39,15 +39,16 @@
         <h2 class="section-title">Search Result</h2>
         <p class="result-count">The number of result found for <strong><span th:text="${searchkey}"></span></strong> is: <span th:text="${resultCount}"></span></p>
         <div class="news-item" th:each="data : ${result}">
+            <a class="news-link" th:href="${data.getLink}">
             <div class="news-content">
-                <a class="news-link" th:href="${data.getLink}">
-                    <h3 class="news-title"><span th:text="${data.getTitle}"></span></h3>
-                </a>
+                <img class="news-image" src="demo-image.png" alt="image">
+                <h3 class="news-title"><span th:text="${data.getTitle}"></span></h3>
                 <p class="news-description" th:text="${data.getDescription}"></p>
                 <p class="news-author">Author: <span th:text="${data.getAuthor}"></span></p>
                 <p class="news-date">Date: <span th:text="${data.getPublishedDate}"></span></p>
                 <p class="news-type">Type: <span th:text="${data.getType}"></span></p>
             </div>
+            </a>
         </div>
     </div>
     <div class="news-section" th:unless="${result}">
