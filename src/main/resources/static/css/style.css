@@ -25,7 +25,7 @@ body {
 }
 
 .result-count {
-    padding-left: 15%;
+    padding-left: 5%;
     font-family: 'Arial', sans-serif;
     color: #ffffff; /* Light text */
 }
@@ -41,6 +41,13 @@ body {
 }
 .news-item {
     text-align: center;
+}
+
+.news-source-website {
+    font-weight: 4px;
+    margin-left: 10px;
+    color: #ffffff; /* Light text */
+    font-size: 12px;
 }
 
 .news-image {
@@ -76,7 +83,8 @@ body {
 }
 
 .news-description {
-    color: #ffffff; /* Light text */
+    font-size: 15px;
+    color: #ffffffdc; /* Light text */
     
 }
 
