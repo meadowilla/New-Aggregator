@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Search Page</title>
+        <title>News Aggregator</title>
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
@@ -17,35 +17,37 @@
 
     <div class="news-section" th:if="${result}">
         <h2 class="section-title">Search Result
-        <form class="result-option" action="/home" method="post">
-            <input type="hidden" name="searchkey" th:value="${searchkey}" />
-            <div>
-            <label class="sort">Time Filter</label>
-            <select name="year" onchange="this.form.submit()">
-                <option th:value="${year}" th:text="${year}"></option>
-                <option value="year">None</option>
-                <th:block th:each="yearItem : ${yearlist}">
-                    <option th:value="${yearItem}" th:text="${yearItem}"></option>
-                </th:block>
-            </select>
-            <select name="month" onchange="this.form.submit()">
-                <option th:value="${month}" th:text="${month}"></option>
-                <option value="month">None</option>
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-            </select>
-            </div>
-        </form>
+            <form class="result-option" id="resultOptionForm" action="/home" method="post">
+                <input type="hidden" name="searchkey" id="searchKeyInput" th:value="${searchkey}" />
+                <div>
+                    <label class="sort" for="yearSelect">Time Filter</label>
+                    <select name="year" id="yearSelect" onchange="this.form.submit()">
+                        <option th:value="${year}" th:text="${year}"></option>
+                        <option value="year">None</option>
+                        <th:block th:each="yearItem : ${yearlist}">
+                            <option th:value="${yearItem}" th:text="${yearItem}"></option>
+                        </th:block>
+                    </select>
+                    <th:block th:if="${year != 'year'}">
+                        <select name="month" id="monthSelect" onchange="this.form.submit()">
+                            <option th:value="${month}" th:text="${month}"></option>
+                            <option value="month">None</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </th:block>
+                </div>
+            </form>
         </h2>
 
 

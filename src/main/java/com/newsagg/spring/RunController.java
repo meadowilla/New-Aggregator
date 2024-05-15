@@ -1,6 +1,7 @@
 package com.newsagg.spring;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -55,6 +56,7 @@ public class RunController {
         for (Data data : getData.getData()) {
             if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
                 yearlist.add(data.getPublishedDate().substring(0, 4));
+                yearlist.sort(Comparator.reverseOrder());
             }
         }
 

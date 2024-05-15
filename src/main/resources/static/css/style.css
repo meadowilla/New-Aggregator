@@ -130,6 +130,7 @@ body {
     color: #c3c6c4; /* Light text */
     font-size: 12px;
 }
+
 .news-author {
     color: #c3c6c4; /* Light text */
     font-size: 12px;
@@ -149,4 +150,41 @@ body {
     font-family: 'Arial', sans-serif;
     color: #c3c6c4b8; /* Light text */
     font-size: 11px;
+}
+
+.result-option {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.result-option label.sort {
+    color: #fff; /* White text color */
+    font-weight: bold;
+}
+
+.result-option select {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-top: 8px;
+    width: 10%;
+}
+
+/* Styling options */
+.result-option select option {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* White text color */
+}
+
+/* Hover effect */
+.result-option select:hover {
+    background-color: #444; /* Darker hover color */
+}
+
+/* Focus effect */
+.result-option select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow */
 }
