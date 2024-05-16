@@ -63,10 +63,10 @@ a.home-button:hover {
 }
 
 .search-form {
+    background-color: #1e1e1e89;
     margin: 0 auto;
     border-radius: 10px;
     text-align: center;
-    margin-top: 10px;
 }
 
 .searchkey {

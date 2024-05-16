@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -16,13 +15,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@SessionAttributes("searchkey")
 public class RunController {
     @GetMapping("/home")
-    public String showSearchForm(ModelMap model) {
-    GetData getData = new GetData();
-    model.addAttribute("news", getData.getData());
-        return "home";
+        public String showSearchForm(ModelMap model) {
+        GetData getData = new GetData();
+        model.addAttribute("news", getData.getData());
+            return "home";
         }
     @PostMapping("/home")
     public String performSearch(@RequestParam(value="searchkey", required = false) String searchkey,
