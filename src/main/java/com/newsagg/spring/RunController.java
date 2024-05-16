@@ -33,33 +33,41 @@ public class RunController {
                                 @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
          
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(result);
-        
+        GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        for (JsonNode node : jsonNode) {
-                Data data = new Data();
-                data.setLink(node.get(0).asText() );
-                data.setSourceWebsite(node.get(1).asText());
-                data.setWebsite(node.get(2).asText());
-                data.setTitle(node.get(3).asText());
-                data.setDescription(node.get(4).asText());
-                data.setAuthor(node.get(5).asText());
-                data.setPublishedDate(node.get(6).asText());
-                data.setType(node.get(7).asText());
-                data.setImage(node.get(8).asText());
-                dataList.add(data);
+        if (searchkey.equals("")) {
+            dataList = getData.getData();
+            searchkey = "All";
         }
+        else {
+            // Get search results from the API
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
+            // Parse the JSON response 
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(result);
+            // Create a list of Data objects to store the search results
+            for (JsonNode node : jsonNode) {
+                    Data data = new Data();
+                    data.setLink(node.get(0).asText() );
+                    data.setSourceWebsite(node.get(1).asText());
+                    data.setWebsite(node.get(2).asText());
+                    data.setTitle(node.get(3).asText());
+                    data.setDescription(node.get(4).asText());
+                    data.setAuthor(node.get(5).asText());
+                    data.setPublishedDate(node.get(6).asText());
+                    data.setType(node.get(7).asText());
+                    data.setImage(node.get(8).asText());
+                    dataList.add(data);
+            }
+        }
+
         if (newestoldest.equals("Oldest")) {
             dataList.sort(Comparator.comparing(Data::getPublishedDate));
         } else {
             dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         }
 
-        GetData getData = new GetData();
         List<String> yearlist = new ArrayList<String>();
         for (Data data : getData.getData()) {
             if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
@@ -75,6 +83,7 @@ public class RunController {
                 websitelist.add(data.getSourceWebsite());
             }
         }
+        websitelist.sort(Comparator.naturalOrder());
         if (!selectwebsite.equals("All")) {
             List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
@@ -91,6 +100,7 @@ public class RunController {
                 writerlist.add(data.getAuthor());
             }
         }
+        writerlist.sort(Comparator.naturalOrder());
         if (!selectwriter.equals("All")) {
             List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
@@ -124,27 +134,36 @@ public class RunController {
                                 @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
                                 @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
-        // Get search results from the API
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
-        // Parse the JSON response 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(result);
-        // Create a list of Data objects to store the search results
+
+        GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        for (JsonNode node : jsonNode) {
-                Data data = new Data();
-                data.setLink(node.get(0).asText() );
-                data.setSourceWebsite(node.get(1).asText());
-                data.setWebsite(node.get(2).asText());
-                data.setTitle(node.get(3).asText());
-                data.setDescription(node.get(4).asText());
-                data.setAuthor(node.get(5).asText());
-                data.setPublishedDate(node.get(6).asText());
-                data.setType(node.get(7).asText());
-                data.setImage(node.get(8).asText());
-                dataList.add(data);
+        if (searchkey.equals("") || (searchkey.equals("All")))  {
+            dataList = getData.getData();
+            searchkey = "All";
         }
+        else {
+            // Get search results from the API
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
+            // Parse the JSON response 
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(result);
+            // Create a list of Data objects to store the search results
+            for (JsonNode node : jsonNode) {
+                    Data data = new Data();
+                    data.setLink(node.get(0).asText() );
+                    data.setSourceWebsite(node.get(1).asText());
+                    data.setWebsite(node.get(2).asText());
+                    data.setTitle(node.get(3).asText());
+                    data.setDescription(node.get(4).asText());
+                    data.setAuthor(node.get(5).asText());
+                    data.setPublishedDate(node.get(6).asText());
+                    data.setType(node.get(7).asText());
+                    data.setImage(node.get(8).asText());
+                    dataList.add(data);
+            }
+        }
+
         // Sort the search results based on the user's selection
         if (newestoldest.equals("Oldest")) {
             dataList.sort(Comparator.comparing(Data::getPublishedDate));
@@ -152,7 +171,6 @@ public class RunController {
             dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         }
         
-        GetData getData = new GetData();
 
         List<String> yearlist = new ArrayList<String>();
         for (Data data : getData.getData()) {
@@ -168,10 +186,10 @@ public class RunController {
                 websitelist.add(data.getSourceWebsite());
             }
         }
+        websitelist.sort(Comparator.naturalOrder());
         if(websitelist.contains(selectwebsite) == false){
             selectwebsite = "All";
         }
-
         if (!selectwebsite.equals("All")) {
             List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
@@ -188,6 +206,7 @@ public class RunController {
                 writerlist.add(data.getAuthor());
             }
         }
+        writerlist.sort(Comparator.naturalOrder());
         if(writerlist.contains(selectwriter) == false){
             selectwriter = "All";
         }
