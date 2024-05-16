@@ -20,11 +20,10 @@
     <script>
         document.querySelector('.search-form').addEventListener('submit', function(event) {
             var searchKey = document.querySelector('.search-box').value;
-            if (searchKey === 'blockchain') {
-                event.preventDefault();
-                window.location.href = '/search?searchkey=' + searchKey;
-            }
-        });
+            event.preventDefault();
+            window.location.href = '/search?searchkey=' + searchKey;
+        }
+    );
     </script>
     <div class="news-section" th:unless="${result}">
         <h2 class="section-title">News</h2>

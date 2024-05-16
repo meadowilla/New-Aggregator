@@ -17,13 +17,20 @@
             <i class="fa fa-search"></i>
         </button>
     </form>
-
+    <script>
+        document.querySelector('.search-form').addEventListener('submit', function(event) {
+            var searchKey = document.querySelector('.search-box').value;
+            event.preventDefault();
+            window.location.href = '/search?searchkey=' + searchKey;
+        }
+    );
+    </script>
     <div class="news-section" th:if="${result}">
         <h2 class="section-title">Search Result
             <form class="result-option" id="resultOptionForm" action="/search" method="post">
                 <input type="hidden" name="searchkey" id="searchKeyInput" th:value="${searchkey}" />
                 <div>
-                    <label class="sort" for="yearSelect">Time Filter</label>
+                    <label class="sort">Time Filter</label>
                     <select name="newestoldest" onchange="this.form.submit()">
                         <option th:value="${newestoldest}" th:text="${newestoldest}"></option>
                         <th:block th:if="${newestoldest == 'Newest'}">
@@ -34,7 +41,9 @@
                     </select>
                     <select name="year" id="yearSelect" onchange="this.form.submit()">
                         <option th:value="${year}" th:text="${year}"></option>
-                        <option value="Year">None</option>
+                        <th:block th:if="${year != 'Year'}">
+                            <option value="Year">Year</option>
+                        </th:block>
                         <th:block th:each="yearItem : ${yearlist}">
                             <th:block th:if="${yearItem != year}">
                                 <option th:value="${yearItem}" th:text="${yearItem}"></option>
@@ -43,8 +52,9 @@
                     <th:block th:if="${year != 'Year'}">
                         <select name="month" id="monthSelect" onchange="this.form.submit()">
                             <option th:value="${month}" th:text="${month}"></option>
-                            <option value="Month">None</option>
-
+                            <th:block th:if="${month != 'Month'}">
+                                <option value="Month">Month</option>
+                            </th:block>
                             <th:block th:if="${month != '01'}">
                                 <option value="01">January</option>
                             </th:block>
@@ -83,6 +93,32 @@
                             </th:block>
                         </select>
                     </th:block>
+                </div>
+                <div>
+                    <label class="sort">Specific Website</label>
+                    <select name="selectwebsite" onchange="this.form.submit()">
+                        <option th:value="${selectwebsite}" th:text="${selectwebsite}"></option>
+                        <th:block th:if="${selectwebsite != 'All'}">
+                            <option value="All">All</option>
+                        </th:block>
+                        <th:block th:each="websiteItem : ${websitelist}">
+                            <th:block th:if="${websiteItem != selectwebsite}">
+                                <option th:value="${websiteItem}" th:text="${websiteItem}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div>
+                    <label class="sort">Specific Writer</label>
+                    <select name="selectwriter" onchange="this.form.submit()">
+                        <option th:value="${selectwriter}" th:text="${selectwriter}"></option>
+                        <th:block th:if="${selectwriter != 'All'}">
+                            <option value="All">All</option>
+                        </th:block>
+                        <th:block th:each="writerItem : ${writerlist}">
+                            <th:block th:if="${writerItem != selectwriter}">
+                                <option th:value="${writerItem}" th:text="${writerItem}"></option>
+                        </th:block>
+                    </select>
                 </div>
             </form>
         </h2>
