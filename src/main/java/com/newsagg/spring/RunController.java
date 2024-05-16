@@ -17,11 +17,56 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class RunController {
     @GetMapping("/home")
-        public String showSearchForm(ModelMap model) {
+        public String home(ModelMap model) {
         GetData getData = new GetData();
+        List<String> websitelist = new ArrayList<String>();
+        for (Data data : getData.getData()) {
+            if (!websitelist.contains(data.getSourceWebsite())) {
+                websitelist.add(data.getSourceWebsite());
+            }
+        }
         model.addAttribute("news", getData.getData());
-            return "home";
+        model.addAttribute("websitelist", websitelist);
+        model.addAttribute("selectwebsite", "All");
+        model.addAttribute("dataForSpecificWebsite", getData.getData());
+
+
+        return "home";
     }
+
+    @PostMapping("/home")
+    public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
+                            ModelMap model) throws JsonMappingException, JsonProcessingException {
+
+        List<Data> dataList = new ArrayList<Data>();
+        dataList = new GetData().getData();
+        List<Data> dataForSpecificWebsite = new ArrayList<Data>();
+        dataForSpecificWebsite = new GetData().getData();
+        dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
+        List<String> websitelist = new ArrayList<String>();
+        for (Data data : dataList) {
+            if (!websitelist.contains(data.getSourceWebsite())) {
+                websitelist.add(data.getSourceWebsite());
+            }
+        }
+        if (!selectwebsite.equals("All")) {
+            List<Data> temp = new ArrayList<Data>();
+            for (Data data : dataList) {
+                if (data.getSourceWebsite().equals(selectwebsite)) {
+                    temp.add(data);
+                }
+            }
+            dataForSpecificWebsite = temp;
+        }
+
+        model.addAttribute("news", dataList);
+        model.addAttribute("websitelist", websitelist);
+        model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
+        model.addAttribute("selectwebsite", selectwebsite);
+        return "home";
+    }
+
+
     @GetMapping("/search")
     public String searchPage(@RequestParam(value="searchkey", required = false) String searchkey,
                                 @RequestParam(value = "year", defaultValue = "Year") String year,

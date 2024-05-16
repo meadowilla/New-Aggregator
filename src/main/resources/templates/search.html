@@ -25,7 +25,7 @@
         }
     );
     </script>
-    <div class="news-section" th:if="${result}">
+    <div class="result-section" th:if="${result}">
         <h2 class="section-title">Search Result
             <form class="result-option" id="resultOptionForm" action="/search" method="post">
                 <input type="hidden" name="searchkey" id="searchKeyInput" th:value="${searchkey}" />
@@ -147,7 +147,7 @@
             </a>
         </div>
     </div>
-    <div class="news-section" th:unless="${result}">
+    <div class="result-section" th:unless="${result}">
         <h2 class="section-title">News</h2>
         <div class="news-item" th:each="index : ${#numbers.sequence(0, 19)}">
             <a class="news-link" th:href="${news[index].getLink}" target="_blank">

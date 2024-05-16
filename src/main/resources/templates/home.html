@@ -25,18 +25,48 @@
         }
     );
     </script>
-    <div class="news-section" th:unless="${result}">
-        <h2 class="section-title">News</h2>
-        <div class="news-item" th:each="index : ${#numbers.sequence(0, 19)}">
-            <a class="news-link" th:href="${news[index].getLink}" target="_blank">
-                <div class="news-content">
-                    <img class="news-image" th:src="${news[index].getImage}" alt="image">
-                    <h3 class="news-title"><span th:text="${news[index].getTitle}"></span></h3>
-                    <p class="news-description" th:text="${news[index].getDescription}"></p>
-                    <p id="by" class="news-date-author"> <span class="news-date" th:text="${news[index].getPublishedDate}"></span> • by <span class="news-author" th:text="${news[index].getAuthor}"></span></p>
-                    <p id="from">from <span class="news-source-website" th:text="${news[index].getSourceWebsite}"></span></p>
+    <div class="container">
+        <div class="news-section">
+            <h2 class="section-title">News</h2>
+            <div class="news-item" th:each="index : ${#numbers.sequence(0, 19)}">
+                <a class="news-link" th:href="${news[index].getLink}" target="_blank">
+                    <div class="news-content">
+                        <img class="news-image" th:src="${news[index].getImage}" alt="image">
+                        <h3 class="news-title"><span th:text="${news[index].getTitle}"></span></h3>
+                        <p class="news-description" th:text="${news[index].getDescription}"></p>
+                        <p id="by" class="news-date-author"> <span class="news-date" th:text="${news[index].getPublishedDate}"></span> • by <span class="news-author" th:text="${news[index].getAuthor}"></span></p>
+                        <p id="from">from <span class="news-source-website" th:text="${news[index].getSourceWebsite}"></span></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="fromwebsite-section">
+            <h2 class="fromwebsite-section-title">
+                <form class="fromwebsite-option" id="resultOptionForm" action="/home" method="post">
+                    <span>From</span>
+                    <select name="selectwebsite" onchange="this.form.submit()">
+                        <option th:value="${selectwebsite}" th:text="${selectwebsite}"></option>
+                        <th:block th:if="${selectwebsite != 'All'}">
+                            <option value="All">All</option>
+                        </th:block>
+                        <th:block th:each="websiteItem : ${websitelist}">
+                            <th:block th:if="${websiteItem != selectwebsite}">
+                                <option th:value="${websiteItem}" th:text="${websiteItem}"></option>
+                        </th:block>
+                    </select>
+                </form>
+            </h2>
+            <div class="fromwebsite-list">
+                <div class="fromwebsite-item" th:each="index : ${#numbers.sequence(0, 20)}">
+                    <a class="fromwebsite-link" th:href="${dataForSpecificWebsite[index].getLink}" target="_blank">
+                        <div class="fromwebsite-content">
+                            <img class="fromwebsite-image" th:src="${dataForSpecificWebsite[index].getImage}" alt="image">
+                            <h3 class="fromwebsite-title"><span th:text="${dataForSpecificWebsite[index].getTitle}"></span></h3>
+                            <p id="by" class="fromwebsite-date-author"> <span class="fromwebsite-date" th:text="${news[index].getPublishedDate}"></span> • by <span class="fromwebsite-author" th:text="${news[index].getAuthor}"></span></p>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 </body>
