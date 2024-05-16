@@ -58,20 +58,24 @@ def search_key_ranking(key, key_dict, rows, documents):
                 break
     return output_documents
 
-def search_key_year_ranking(key, year, rows, documents):
+def search_key_year_ranking(key, year, key_dict, rows, documents):
     output_documents = []
     rank_indices = tfidf_ranking(key, documents)
     for idx in rank_indices:
-        if rows[idx][6][:4] == year:
-            output_documents.append(rows[idx])
+        for k in key_dict[idx]:
+            if k in key and rows[idx][6][:4] == year:
+                output_documents.append(rows[idx])
+                break
     return output_documents
 
-def search_key_year_month_ranking(key, year, month, rows, documents):
+def search_key_year_month_ranking(key, year, month, key_dict, rows, documents):
     output_documents = []
     rank_indices = tfidf_ranking(key, documents)
     for idx in rank_indices:
-        if rows[idx][6][:4] == year and rows[idx][6][5:7] == month:
-            output_documents.append(rows[idx])
+        for k in key_dict[idx]:
+            if k in key and rows[idx][6][:4] == year and rows[idx][6][5:7] == month:
+                output_documents.append(rows[idx])
+                break
     return output_documents
 
 # Return new csv file
@@ -82,43 +86,38 @@ def return_new_csv(output_file, output_documents):
                 csv_writer.writerow(row)
 
 # Main function
-def key_search(search_key):
-    file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
-    key_documents, rows = read_csv(file_path) # Maybe you need to change the idx of rows to align with your csv file
+def key_search(search_key, key_documents, rows):
     dict = create_key_dict(key_documents)
     output_documents = search_key_ranking(search_key, dict, rows, key_documents)
     return output_documents
 
-def key_year_search(search_key, year):
-    file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
-    key_documents, rows = read_csv(file_path) # Maybe you need to change the idx of rows to align with your csv file
-    output_documents = search_key_year_ranking(search_key, year, rows, key_documents)
+def key_year_search(search_key, year, key_documents, rows):
+    dict = create_key_dict(key_documents)
+    output_documents = search_key_year_ranking(search_key, year, dict, rows, key_documents)
     return output_documents
- 
-def key_year_month_search(search_key, year, month):
+def key_year_month_search(search_key, year, month, key_documents, rows):
     if year == "Year":
-        return key_search(search_key)
+        return key_search(search_key, key_documents, rows)
     elif month == "Month":
-        return key_year_search(search_key, year)
+        return key_year_search(search_key, year, key_documents, rows)
     else:
-        file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
-        key_documents, rows = read_csv(file_path) # Maybe you need to change the idx of rows to align with your csv file
-        output_documents = search_key_year_month_ranking(search_key, year, month, rows, key_documents)
+        dict = create_key_dict(key_documents)
+        output_documents = search_key_year_month_ranking(search_key, year, month, dict, rows, key_documents)
         return output_documents
-
 if __name__ == "__main__":
-    file_path = 'src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
+    file_path = 'E:\\Code\\Spring\\src\\main\\resources\\test_year_search.csv' # Relative Path to your csv file
     key_documents, rows = read_csv(file_path) # Maybe you need to change the idx of rows to align with your csv file
 
-    search_key = "nft token"
-    year = "2023"
-    month = "10"
+    search_key = "blockchain"
+    year = "2024"
+    month = "02"
     
     # key_search(search_key, key_documents, rows)
     # key_year_search(search_key, year, key_documents, rows)
     # key_year_month_search(search_key, year, month, key_documents, rows)
-    print(len(key_search("blockchain")))
-    print(len(key_year_search("blockchain", "2024")))
+    print(len(key_search("blockchain", key_documents, rows)))
+    print(len(key_year_search("blockchain", "2024", key_documents, rows)))
+
 
 
 
