@@ -20,7 +20,7 @@
 
     <div class="news-section" th:if="${result}">
         <h2 class="section-title">Search Result
-            <form class="result-option" id="resultOptionForm" action="/home" method="post">
+            <form class="result-option" id="resultOptionForm" action="/search" method="post">
                 <input type="hidden" name="searchkey" id="searchKeyInput" th:value="${searchkey}" />
                 <div>
                     <label class="sort" for="yearSelect">Time Filter</label>

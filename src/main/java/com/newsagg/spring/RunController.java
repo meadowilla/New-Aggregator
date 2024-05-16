@@ -22,8 +22,60 @@ public class RunController {
         model.addAttribute("news", getData.getData());
             return "home";
         }
-    @PostMapping("/home")
-    public String performSearch(@RequestParam(value="searchkey", required = false) String searchkey,
+    // @PostMapping("/home")
+    // public String performSearch(@RequestParam(value="searchkey", required = false) String searchkey,
+    //                             @RequestParam(value = "year", defaultValue = "Year") String year,
+    //                             @RequestParam(value = "month", defaultValue = "Month") String month,
+    //                             @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
+    //                             ModelMap model) throws JsonMappingException, JsonProcessingException {
+         
+    //     RestTemplate restTemplate = new RestTemplate();
+    //     String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
+
+    //     ObjectMapper objectMapper = new ObjectMapper();
+    //     JsonNode jsonNode = objectMapper.readTree(result);
+        
+    //     List<Data> dataList = new ArrayList<Data>();
+    //     for (JsonNode node : jsonNode) {
+    //             Data data = new Data();
+    //             data.setLink(node.get(0).asText() );
+    //             data.setSourceWebsite(node.get(1).asText());
+    //             data.setWebsite(node.get(2).asText());
+    //             data.setTitle(node.get(3).asText());
+    //             data.setDescription(node.get(4).asText());
+    //             data.setAuthor(node.get(5).asText());
+    //             data.setPublishedDate(node.get(6).asText());
+    //             data.setType(node.get(7).asText());
+    //             data.setImage(node.get(8).asText());
+    //             dataList.add(data);
+    //     }
+    //     if (newestoldest.equals("Oldest")) {
+    //         dataList.sort(Comparator.comparing(Data::getPublishedDate));
+    //     } else {
+    //         dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
+    //     }
+
+    //     GetData getData = new GetData();
+    //     List<String> yearlist = new ArrayList<String>();
+    //     for (Data data : getData.getData()) {
+    //         if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
+    //             yearlist.add(data.getPublishedDate().substring(0, 4));
+    //             yearlist.sort(Comparator.reverseOrder());
+    //         }
+    //     }
+    //     model.addAttribute("newestoldest", newestoldest);
+    //     model.addAttribute("yearlist", yearlist);
+    //     model.addAttribute("searchkey", searchkey);
+    //     model.addAttribute("year", year);
+    //     model.addAttribute("month", month);
+    //     model.addAttribute("resultCount", dataList.size());
+    //     model.addAttribute("result", dataList);
+
+    //     return "home";
+    // }    
+
+    @GetMapping("/search")
+    public String searchPage(@RequestParam(value="searchkey", required = false) String searchkey,
                                 @RequestParam(value = "year", defaultValue = "Year") String year,
                                 @RequestParam(value = "month", defaultValue = "Month") String month,
                                 @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
@@ -71,6 +123,58 @@ public class RunController {
         model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
 
-        return "home";
+        return "search";
     }    
+    @PostMapping("/search")
+    public String search(@RequestParam(value="searchkey", required = true) String searchkey,
+                                @RequestParam(value = "year", defaultValue = "Year") String year,
+                                @RequestParam(value = "month", defaultValue = "Month") String month,
+                                @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
+                                ModelMap model) throws JsonMappingException, JsonProcessingException {
+         
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(result);
+        
+        List<Data> dataList = new ArrayList<Data>();
+        for (JsonNode node : jsonNode) {
+                Data data = new Data();
+                data.setLink(node.get(0).asText() );
+                data.setSourceWebsite(node.get(1).asText());
+                data.setWebsite(node.get(2).asText());
+                data.setTitle(node.get(3).asText());
+                data.setDescription(node.get(4).asText());
+                data.setAuthor(node.get(5).asText());
+                data.setPublishedDate(node.get(6).asText());
+                data.setType(node.get(7).asText());
+                data.setImage(node.get(8).asText());
+                dataList.add(data);
+        }
+        if (newestoldest.equals("Oldest")) {
+            dataList.sort(Comparator.comparing(Data::getPublishedDate));
+        } else {
+            dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
+        }
+
+        GetData getData = new GetData();
+        List<String> yearlist = new ArrayList<String>();
+        for (Data data : getData.getData()) {
+            if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
+                yearlist.add(data.getPublishedDate().substring(0, 4));
+                yearlist.sort(Comparator.reverseOrder());
+            }
+        }
+        model.addAttribute("newestoldest", newestoldest);
+        model.addAttribute("yearlist", yearlist);
+        model.addAttribute("searchkey", searchkey);
+        model.addAttribute("year", year);
+        model.addAttribute("month", month);
+        model.addAttribute("resultCount", dataList.size());
+        model.addAttribute("result", dataList);
+
+        return "search";
+    }    
+
 }
