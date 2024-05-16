@@ -25,17 +25,29 @@ public class RunController {
                 websitelist.add(data.getSourceWebsite());
             }
         }
+        List<Data> dataForSpecificWebsite = new ArrayList<Data>();
+        dataForSpecificWebsite = new GetData().getData();
+        dataForSpecificWebsite.sort(Comparator.comparing(Data::getPublishedDate).reversed());
+        List<Data> temp = new ArrayList<Data>();
+        for (Data data : getData.getData()) {
+            if (data.getSourceWebsite().equals("The Block")) {
+                temp.add(data);
+            }
+        }
+        dataForSpecificWebsite = temp;
+
+
         model.addAttribute("news", getData.getData());
         model.addAttribute("websitelist", websitelist);
-        model.addAttribute("selectwebsite", "All");
-        model.addAttribute("dataForSpecificWebsite", getData.getData());
+        model.addAttribute("selectwebsite", "The Block");
+        model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
 
 
         return "home";
     }
 
     @PostMapping("/home")
-    public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
+    public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "The Block") String selectwebsite,
                             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         List<Data> dataList = new ArrayList<Data>();
@@ -245,6 +257,41 @@ public class RunController {
                 yearlist.sort(Comparator.reverseOrder());
             }
         }
+        yearlist.sort(Comparator.reverseOrder());
+        if(yearlist.contains(year) == false){
+            year = "Year";
+        }
+        if (!year.equals("Year")) {
+            List<Data> temp = new ArrayList<Data>();
+            for (Data data : dataList) {
+                if (data.getPublishedDate().substring(0, 4).equals(year)) {
+                    temp.add(data);
+                }
+            }
+            dataList = temp;
+        }
+
+        List<String> monthlist = new ArrayList<String>();
+        for (Data data : new GetData().getData()) {
+            if (!monthlist.contains(data.getPublishedDate().substring(5, 7))) {
+                monthlist.add(data.getPublishedDate().substring(5, 7));
+                monthlist.sort(Comparator.naturalOrder());
+            }
+        }
+        monthlist.sort(Comparator.naturalOrder());
+        if(monthlist.contains(month) == false){
+            month = "Month";
+        }
+        if (!month.equals("Month")) {
+            List<Data> temp = new ArrayList<Data>();
+            for (Data data : dataList) {
+                if (data.getPublishedDate().substring(5, 7).equals(month)) {
+                    temp.add(data);
+                }
+            }
+            dataList = temp;
+        }
+        
 
         List<String> websitelist = new ArrayList<String>();
         for (Data data : dataList) {
