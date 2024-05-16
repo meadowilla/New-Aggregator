@@ -106,9 +106,7 @@
                                 <option th:value="${websiteItem}" th:text="${websiteItem}"></option>
                         </th:block>
                     </select>
-                </div>
-                <div>
-                    <label class="sort">Specific Writer</label>
+                    <label class="sort">Writer</label>
                     <select name="selectwriter" onchange="this.form.submit()">
                         <option th:value="${selectwriter}" th:text="${selectwriter}"></option>
                         <th:block th:if="${selectwriter != 'All'}">
@@ -117,6 +115,17 @@
                         <th:block th:each="writerItem : ${writerlist}">
                             <th:block th:if="${writerItem != selectwriter}">
                                 <option th:value="${writerItem}" th:text="${writerItem}"></option>
+                        </th:block>
+                    </select>
+                    <label class="sort">Type</label>
+                    <select name="selecttype" onchange="this.form.submit()">
+                        <option th:value="${selecttype}" th:text="${selecttype}"></option>
+                        <th:block th:if="${selecttype != 'All'}">
+                            <option value="All">All</option>
+                        </th:block>
+                        <th:block th:each="typeItem : ${typelist}">
+                            <th:block th:if="${typeItem != selecttype}">
+                                <option th:value="${typeItem}" th:text="${typeItem}"></option>
                         </th:block>
                     </select>
                 </div>

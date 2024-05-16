@@ -16,14 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class RunController {
-
     @GetMapping("/home")
         public String showSearchForm(ModelMap model) {
         GetData getData = new GetData();
         model.addAttribute("news", getData.getData());
             return "home";
-        }
-
+    }
     @GetMapping("/search")
     public String searchPage(@RequestParam(value="searchkey", required = false) String searchkey,
                                 @RequestParam(value = "year", defaultValue = "Year") String year,
@@ -31,8 +29,11 @@ public class RunController {
                                 @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
                                 @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
                                 @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
+                                @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
-         
+
+    // If the search key is empty, display all result in database
+    // Otherwise, get search results from the API
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
         if (searchkey.equals("")) {
@@ -60,14 +61,14 @@ public class RunController {
                     data.setImage(node.get(8).asText());
                     dataList.add(data);
             }
-        }
-
+        }  
+        // Sort the search results based on the user's selection
         if (newestoldest.equals("Oldest")) {
             dataList.sort(Comparator.comparing(Data::getPublishedDate));
         } else {
             dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         }
-
+        // Get the list of years for the dropdown menu
         List<String> yearlist = new ArrayList<String>();
         for (Data data : getData.getData()) {
             if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
@@ -76,7 +77,6 @@ public class RunController {
             }
         }
 
-        
         List<String> websitelist = new ArrayList<String>();
         for (Data data : dataList) {
             if (!websitelist.contains(data.getSourceWebsite())) {
@@ -95,7 +95,7 @@ public class RunController {
         }
 
         List<String> writerlist = new ArrayList<String>();
-        for (Data data : getData.getData()) {
+        for (Data data : dataList) {
             if (!writerlist.contains(data.getAuthor())) {
                 writerlist.add(data.getAuthor());
             }
@@ -111,6 +111,24 @@ public class RunController {
             dataList = temp;
         }
 
+        List<String> typelist = new ArrayList<String>();
+        for (Data data : dataList) {
+            if (!typelist.contains(data.getType())) {
+                typelist.add(data.getType());
+            }
+        }
+        typelist.sort(Comparator.naturalOrder());
+        if (!selecttype.equals("All")) {
+            List<Data> temp = new ArrayList<Data>();
+            for (Data data : dataList) {
+                if (data.getType().equals(selecttype)) {
+                    temp.add(data);
+                }
+            }
+            dataList = temp;
+        }
+
+
 
         model.addAttribute("newestoldest", newestoldest);
         model.addAttribute("yearlist", yearlist);
@@ -123,6 +141,8 @@ public class RunController {
         model.addAttribute("selectwebsite", selectwebsite);
         model.addAttribute("writerlist", writerlist);
         model.addAttribute("selectwriter", selectwriter);
+        model.addAttribute("typelist", typelist);
+        model.addAttribute("selecttype", selecttype);
 
         return "search";
     }    
@@ -133,6 +153,7 @@ public class RunController {
                                 @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
                                 @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
                                 @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
+                                @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
                                 ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         GetData getData = new GetData();
@@ -219,6 +240,26 @@ public class RunController {
             }
             dataList = temp;
         }
+
+        List<String> typelist = new ArrayList<String>();
+        for (Data data : dataList) {
+            if (!typelist.contains(data.getType())) {
+                typelist.add(data.getType());
+            }
+        }
+        typelist.sort(Comparator.naturalOrder());
+        if(typelist.contains(selecttype) == false){
+            selecttype = "All";
+        }
+        if (!selecttype.equals("All")) {
+            List<Data> temp = new ArrayList<Data>();
+            for (Data data : dataList) {
+                if (data.getType().equals(selecttype)) {
+                    temp.add(data);
+                }
+            }
+            dataList = temp;
+        }
         
         model.addAttribute("newestoldest", newestoldest);
         model.addAttribute("yearlist", yearlist);
@@ -231,6 +272,8 @@ public class RunController {
         model.addAttribute("selectwebsite", selectwebsite);
         model.addAttribute("writerlist", writerlist);
         model.addAttribute("selectwriter", selectwriter);
+        model.addAttribute("typelist", typelist);
+        model.addAttribute("selecttype", selecttype);
 
         return "search";
     }    
