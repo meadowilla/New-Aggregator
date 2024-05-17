@@ -12,7 +12,7 @@
         <a href="http://localhost:8080/home" class="home-button">
             <span class="fa fa-home"></span>
         </a>
-        <input class="search-box" type="text" name="searchkey" placeholder="Enter keyword">
+        <input class="search-box" type="text" name="searchKey" placeholder="Enter keyword">
         <button class="search-button" type="submit">
             <i class="fa fa-search"></i>
         </button>
@@ -21,22 +21,22 @@
         document.querySelector('.search-form').addEventListener('submit', function(event) {
             var searchKey = document.querySelector('.search-box').value;
             event.preventDefault();
-            window.location.href = '/search?searchkey=' + searchKey;
+            window.location.href = '/search?searchKey=' + searchKey;
         }
     );
     </script>
     <div class="result-section" th:if="${result}">
         <h2 class="section-title">Search Result
             <form class="result-option" id="resultOptionForm" action="/search" method="post">
-                <input type="hidden" name="searchkey" id="searchKeyInput" th:value="${searchkey}" />
+                <input type="hidden" name="searchKey" id="searchKeyInput" th:value="${searchKey}" />
                 <div>
                     <label class="sort">Time Filter</label>
-                    <select name="newestoldest" onchange="this.form.submit()">
-                        <option th:value="${newestoldest}" th:text="${newestoldest}"></option>
-                        <th:block th:if="${newestoldest == 'Newest'}">
+                    <select name="newestOldest" onchange="this.form.submit()">
+                        <option th:value="${newestOldest}" th:text="${newestOldest}"></option>
+                        <th:block th:if="${newestOldest == 'Newest'}">
                             <option th:value="Oldest">Oldest</option>
                         </th:block> 
-                        <th:block th:if="${newestoldest == 'Oldest'}">
+                        <th:block th:if="${newestOldest == 'Oldest'}">
                             <option th:value="Newest">Newest</option>
                     </select>
                     <select name="year" id="yearSelect" onchange="this.form.submit()">
@@ -44,7 +44,7 @@
                         <th:block th:if="${year != 'Year'}">
                             <option value="Year">Year</option>
                         </th:block>
-                        <th:block th:each="yearItem : ${yearlist}">
+                        <th:block th:each="yearItem : ${yearList}">
                             <th:block th:if="${yearItem != year}">
                                 <option th:value="${yearItem}" th:text="${yearItem}"></option>
                         </th:block>
@@ -96,35 +96,35 @@
                 </div>
                 <div>
                     <label class="sort">Specific Website</label>
-                    <select name="selectwebsite" onchange="this.form.submit()">
-                        <option th:value="${selectwebsite}" th:text="${selectwebsite}"></option>
-                        <th:block th:if="${selectwebsite != 'All'}">
+                    <select name="selectWebsite" onchange="this.form.submit()">
+                        <option th:value="${selectWebsite}" th:text="${selectWebsite}"></option>
+                        <th:block th:if="${selectWebsite != 'All'}">
                             <option value="All">All</option>
                         </th:block>
                         <th:block th:each="websiteItem : ${websitelist}">
-                            <th:block th:if="${websiteItem != selectwebsite}">
+                            <th:block th:if="${websiteItem != selectWebsite}">
                                 <option th:value="${websiteItem}" th:text="${websiteItem}"></option>
                         </th:block>
                     </select>
                     <label class="sort">Writer</label>
-                    <select name="selectwriter" onchange="this.form.submit()">
-                        <option th:value="${selectwriter}" th:text="${selectwriter}"></option>
-                        <th:block th:if="${selectwriter != 'All'}">
+                    <select name="selectWriter" onchange="this.form.submit()">
+                        <option th:value="${selectWriter}" th:text="${selectWriter}"></option>
+                        <th:block th:if="${selectWriter != 'All'}">
                             <option value="All">All</option>
                         </th:block>
-                        <th:block th:each="writerItem : ${writerlist}">
-                            <th:block th:if="${writerItem != selectwriter}">
+                        <th:block th:each="writerItem : ${writerList}">
+                            <th:block th:if="${writerItem != selectWriter}">
                                 <option th:value="${writerItem}" th:text="${writerItem}"></option>
                         </th:block>
                     </select>
                     <label class="sort">Type</label>
-                    <select name="selecttype" onchange="this.form.submit()">
-                        <option th:value="${selecttype}" th:text="${selecttype}"></option>
-                        <th:block th:if="${selecttype != 'All'}">
+                    <select name="selectType" onchange="this.form.submit()">
+                        <option th:value="${selectType}" th:text="${selectType}"></option>
+                        <th:block th:if="${selectType != 'All'}">
                             <option value="All">All</option>
                         </th:block>
-                        <th:block th:each="typeItem : ${typelist}">
-                            <th:block th:if="${typeItem != selecttype}">
+                        <th:block th:each="typeItem : ${typeList}">
+                            <th:block th:if="${typeItem != selectType}">
                                 <option th:value="${typeItem}" th:text="${typeItem}"></option>
                         </th:block>
                     </select>
@@ -134,7 +134,7 @@
 
 
 
-        <p class="result-count">The number of results found for <strong><span class="searchkey" th:text="${searchkey}"></span></strong> is: <span th:text="${resultCount}"></span></p>
+        <p class="result-count">The number of results found for <strong><span class="searchkey" th:text="${searchKey}"></span></strong> is: <span th:text="${resultCount}"></span></p>
         <div class="news-item" th:each="data : ${result}">
             <a class="news-link" th:href="${data.getLink}" target="_blank">
             <div class="news-content">

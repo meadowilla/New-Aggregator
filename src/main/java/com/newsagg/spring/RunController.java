@@ -37,15 +37,15 @@ public class RunController {
         dataForSpecificWebsite = dataListInProcess;
 
         model.addAttribute("news", getData.getData());
-        model.addAttribute("websitelist", websiteList);
-        model.addAttribute("selectwebsite", "The Block");
+        model.addAttribute("websiteList", websiteList);
+        model.addAttribute("selectWebsite", "The Block");
         model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
 
         return "home";
     }
 
     @PostMapping("/home")
-    public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "The Block") String selectWebsite,
+    public String homePost(@RequestParam(value = "selectWebsite", defaultValue = "The Block") String selectWebsite,
             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         List<Data> dataList = new ArrayList<Data>();
@@ -70,20 +70,20 @@ public class RunController {
         }
 
         model.addAttribute("news", dataList);
-        model.addAttribute("websitelist", websiteList);
+        model.addAttribute("websiteList", websiteList);
         model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
-        model.addAttribute("selectwebsite", selectWebsite);
+        model.addAttribute("selectWebsite", selectWebsite);
         return "home";
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(value = "searchkey", required = false) String searchKey,
+    public String search(@RequestParam(value = "searchKey", required = false) String searchKey,
             @RequestParam(value = "year", defaultValue = "Year") String year,
             @RequestParam(value = "month", defaultValue = "Month") String month,
-            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestOldest,
-            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectWebsite,
-            @RequestParam(value = "selectwriter", defaultValue = "All") String selectWriter,
-            @RequestParam(value = "selecttype", defaultValue = "All") String selectType,
+            @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
+            @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
+            @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
+            @RequestParam(value = "selectType", defaultValue = "All") String selectType,
             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         // If the search key is empty, display all result in database
@@ -183,31 +183,31 @@ public class RunController {
             dataList = dataListInProcess;
         }
 
-        model.addAttribute("newestoldest", newestOldest);
-        model.addAttribute("yearlist", yearList);
-        model.addAttribute("searchkey", searchKey);
+        model.addAttribute("newestOldest", newestOldest);
+        model.addAttribute("yearList", yearList);
+        model.addAttribute("searchKey", searchKey);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
         model.addAttribute("websitelist", websiteList);
-        model.addAttribute("selectwebsite", selectWebsite);
-        model.addAttribute("writerlist", writerList);
-        model.addAttribute("selectwriter", selectWriter);
-        model.addAttribute("typelist", typeList);
-        model.addAttribute("selecttype", selectType);
+        model.addAttribute("selectWebsite", selectWebsite);
+        model.addAttribute("writerList", writerList);
+        model.addAttribute("selectWriter", selectWriter);
+        model.addAttribute("typeList", typeList);
+        model.addAttribute("selectType", selectType);
 
         return "search";
     }
 
     @PostMapping("/search")
-    public String searchPost(@RequestParam(value = "searchkey", required = true) String searchKey,
+    public String searchPost(@RequestParam(value = "searchKey", required = true) String searchKey,
             @RequestParam(value = "year", defaultValue = "Year") String year,
             @RequestParam(value = "month", defaultValue = "Month") String month,
-            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestOldest,
-            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectWebsite,
-            @RequestParam(value = "selectwriter", defaultValue = "All") String selectWriter,
-            @RequestParam(value = "selecttype", defaultValue = "All") String selectType,
+            @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
+            @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
+            @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
+            @RequestParam(value = "selectType", defaultValue = "All") String selectType,
             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         GetData getData = new GetData();
@@ -349,19 +349,19 @@ public class RunController {
             dataList = dataListInProcess;
         }
 
-        model.addAttribute("newestoldest", newestOldest);
-        model.addAttribute("yearlist", yearList);
-        model.addAttribute("searchkey", searchKey);
+        model.addAttribute("newestOldest", newestOldest);
+        model.addAttribute("yearList", yearList);
+        model.addAttribute("searchKey", searchKey);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
         model.addAttribute("websitelist", websitelist);
-        model.addAttribute("selectwebsite", selectWebsite);
-        model.addAttribute("writerlist", writerList);
-        model.addAttribute("selectwriter", selectWriter);
-        model.addAttribute("typelist", typeList);
-        model.addAttribute("selecttype", selectType);
+        model.addAttribute("selectWebsite", selectWebsite);
+        model.addAttribute("writerList", writerList);
+        model.addAttribute("selectWriter", selectWriter);
+        model.addAttribute("typeList", typeList);
+        model.addAttribute("selectType", selectType);
 
         return "search";
     }
