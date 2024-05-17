@@ -96,13 +96,13 @@
                 </div>
                 <div>
                     <label class="sort">Specific Website</label>
-                    <select name="selectwebsite" onchange="this.form.submit()">
-                        <option th:value="${selectwebsite}" th:text="${selectwebsite}"></option>
-                        <th:block th:if="${selectwebsite != 'All'}">
+                    <select name="selectWebsite" onchange="this.form.submit()">
+                        <option th:value="${selectWebsite}" th:text="${selectWebsite}"></option>
+                        <th:block th:if="${selectWebsite != 'All'}">
                             <option value="All">All</option>
                         </th:block>
-                        <th:block th:each="websiteItem : ${websitelist}">
-                            <th:block th:if="${websiteItem != selectwebsite}">
+                        <th:block th:each="websiteItem : ${websiteList}">
+                            <th:block th:if="${websiteItem != selectWebsite}">
                                 <option th:value="${websiteItem}" th:text="${websiteItem}"></option>
                         </th:block>
                     </select>
