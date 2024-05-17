@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.csv.*;
+
 // Link,Source website,Website,Title,Description,Author,Published date,Type,Image
 public class GetData {
     public List<Data> getData() {
@@ -28,7 +29,7 @@ public class GetData {
                 data.setImage(csvRecord.get(8));
                 dataList.add(data);
             }
-        dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
+            dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         } catch (IOException e) {
             e.printStackTrace();
         }

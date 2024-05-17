@@ -19,25 +19,25 @@ public class RunController {
     @GetMapping("/home")
     public String home(ModelMap model) {
         GetData getData = new GetData();
-        List<String> websitelist = new ArrayList<String>();
+        List<String> websiteList = new ArrayList<String>();
         for (Data data : getData.getData()) {
-            if (!websitelist.contains(data.getSourceWebsite())) {
-                websitelist.add(data.getSourceWebsite());
+            if (!websiteList.contains(data.getSourceWebsite())) {
+                websiteList.add(data.getSourceWebsite());
             }
         }
         List<Data> dataForSpecificWebsite = new ArrayList<Data>();
         dataForSpecificWebsite = new GetData().getData();
         dataForSpecificWebsite.sort(Comparator.comparing(Data::getPublishedDate).reversed());
-        List<Data> temp = new ArrayList<Data>();
+        List<Data> dataListInProcess = new ArrayList<Data>();
         for (Data data : getData.getData()) {
             if (data.getSourceWebsite().equals("The Block")) {
-                temp.add(data);
+                dataListInProcess.add(data);
             }
         }
-        dataForSpecificWebsite = temp;
+        dataForSpecificWebsite = dataListInProcess;
 
         model.addAttribute("news", getData.getData());
-        model.addAttribute("websitelist", websitelist);
+        model.addAttribute("websitelist", websiteList);
         model.addAttribute("selectwebsite", "The Block");
         model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
 
@@ -45,7 +45,7 @@ public class RunController {
     }
 
     @PostMapping("/home")
-    public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "The Block") String selectwebsite,
+    public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "The Block") String selectWebsite,
             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         List<Data> dataList = new ArrayList<Data>();
@@ -53,51 +53,51 @@ public class RunController {
         List<Data> dataForSpecificWebsite = new ArrayList<Data>();
         dataForSpecificWebsite = new GetData().getData();
         dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
-        List<String> websitelist = new ArrayList<String>();
+        List<String> websiteList = new ArrayList<String>();
         for (Data data : dataList) {
-            if (!websitelist.contains(data.getSourceWebsite())) {
-                websitelist.add(data.getSourceWebsite());
+            if (!websiteList.contains(data.getSourceWebsite())) {
+                websiteList.add(data.getSourceWebsite());
             }
         }
-        if (!selectwebsite.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        if (!selectWebsite.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getSourceWebsite().equals(selectwebsite)) {
-                    temp.add(data);
+                if (data.getSourceWebsite().equals(selectWebsite)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataForSpecificWebsite = temp;
+            dataForSpecificWebsite = dataListInProcess;
         }
 
         model.addAttribute("news", dataList);
-        model.addAttribute("websitelist", websitelist);
+        model.addAttribute("websitelist", websiteList);
         model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
-        model.addAttribute("selectwebsite", selectwebsite);
+        model.addAttribute("selectwebsite", selectWebsite);
         return "home";
     }
 
     @GetMapping("/search")
-    public String searchPage(@RequestParam(value = "searchkey", required = false) String searchkey,
+    public String search(@RequestParam(value = "searchkey", required = false) String searchKey,
             @RequestParam(value = "year", defaultValue = "Year") String year,
             @RequestParam(value = "month", defaultValue = "Month") String month,
-            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
-            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
-            @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
-            @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
+            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestOldest,
+            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectWebsite,
+            @RequestParam(value = "selectwriter", defaultValue = "All") String selectWriter,
+            @RequestParam(value = "selecttype", defaultValue = "All") String selectType,
             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         // If the search key is empty, display all result in database
         // Otherwise, get search results from the API
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        if (searchkey.equals("")) {
+        if (searchKey.equals("")) {
             dataList = getData.getData();
-            searchkey = "All";
+            searchKey = "All";
         } else {
             // Get search results from the API
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(
-                    "http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month,
+                    "http://localhost:5000/search?searchkey=" + searchKey + "&year=" + year + "&month=" + month,
                     String.class);
             // Parse the JSON response
             ObjectMapper objectMapper = new ObjectMapper();
@@ -118,108 +118,108 @@ public class RunController {
             }
         }
         // Sort the search results based on the user's selection
-        if (newestoldest.equals("Oldest")) {
+        if (newestOldest.equals("Oldest")) {
             dataList.sort(Comparator.comparing(Data::getPublishedDate));
         } else {
             dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         }
         // Get the list of years for the dropdown menu
-        List<String> yearlist = new ArrayList<String>();
+        List<String> yearList = new ArrayList<String>();
         for (Data data : getData.getData()) {
-            if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
-                yearlist.add(data.getPublishedDate().substring(0, 4));
-                yearlist.sort(Comparator.reverseOrder());
+            if (!yearList.contains(data.getPublishedDate().substring(0, 4))) {
+                yearList.add(data.getPublishedDate().substring(0, 4));
+                yearList.sort(Comparator.reverseOrder());
             }
         }
 
-        List<String> websitelist = new ArrayList<String>();
+        List<String> websiteList = new ArrayList<String>();
         for (Data data : dataList) {
-            if (!websitelist.contains(data.getSourceWebsite())) {
-                websitelist.add(data.getSourceWebsite());
+            if (!websiteList.contains(data.getSourceWebsite())) {
+                websiteList.add(data.getSourceWebsite());
             }
         }
-        websitelist.sort(Comparator.naturalOrder());
-        if (!selectwebsite.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        websiteList.sort(Comparator.naturalOrder());
+        if (!selectWebsite.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getSourceWebsite().equals(selectwebsite)) {
-                    temp.add(data);
+                if (data.getSourceWebsite().equals(selectWebsite)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
-        List<String> writerlist = new ArrayList<String>();
+        List<String> writerList = new ArrayList<String>();
         for (Data data : dataList) {
-            if (!writerlist.contains(data.getAuthor())) {
-                writerlist.add(data.getAuthor());
+            if (!writerList.contains(data.getAuthor())) {
+                writerList.add(data.getAuthor());
             }
         }
-        writerlist.sort(Comparator.naturalOrder());
-        if (!selectwriter.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        writerList.sort(Comparator.naturalOrder());
+        if (!selectWriter.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getAuthor().equals(selectwriter)) {
-                    temp.add(data);
+                if (data.getAuthor().equals(selectWriter)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
-        List<String> typelist = new ArrayList<String>();
+        List<String> typeList = new ArrayList<String>();
         for (Data data : dataList) {
-            if (!typelist.contains(data.getType())) {
-                typelist.add(data.getType());
+            if (!typeList.contains(data.getType())) {
+                typeList.add(data.getType());
             }
         }
-        typelist.sort(Comparator.naturalOrder());
-        if (!selecttype.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        typeList.sort(Comparator.naturalOrder());
+        if (!selectType.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getType().equals(selecttype)) {
-                    temp.add(data);
+                if (data.getType().equals(selectType)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
-        model.addAttribute("newestoldest", newestoldest);
-        model.addAttribute("yearlist", yearlist);
-        model.addAttribute("searchkey", searchkey);
+        model.addAttribute("newestoldest", newestOldest);
+        model.addAttribute("yearlist", yearList);
+        model.addAttribute("searchkey", searchKey);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
-        model.addAttribute("websitelist", websitelist);
-        model.addAttribute("selectwebsite", selectwebsite);
-        model.addAttribute("writerlist", writerlist);
-        model.addAttribute("selectwriter", selectwriter);
-        model.addAttribute("typelist", typelist);
-        model.addAttribute("selecttype", selecttype);
+        model.addAttribute("websitelist", websiteList);
+        model.addAttribute("selectwebsite", selectWebsite);
+        model.addAttribute("writerlist", writerList);
+        model.addAttribute("selectwriter", selectWriter);
+        model.addAttribute("typelist", typeList);
+        model.addAttribute("selecttype", selectType);
 
         return "search";
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam(value = "searchkey", required = true) String searchkey,
+    public String searchPost(@RequestParam(value = "searchkey", required = true) String searchKey,
             @RequestParam(value = "year", defaultValue = "Year") String year,
             @RequestParam(value = "month", defaultValue = "Month") String month,
-            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
-            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
-            @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
-            @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
+            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestOldest,
+            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectWebsite,
+            @RequestParam(value = "selectwriter", defaultValue = "All") String selectWriter,
+            @RequestParam(value = "selecttype", defaultValue = "All") String selectType,
             ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        if (searchkey.equals("") || (searchkey.equals("All"))) {
+        if (searchKey.equals("") || (searchKey.equals("All"))) {
             dataList = getData.getData();
-            searchkey = "All";
+            searchKey = "All";
         } else {
             // Get search results from the API
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(
-                    "http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month,
+                    "http://localhost:5000/search?searchkey=" + searchKey + "&year=" + year + "&month=" + month,
                     String.class);
             // Parse the JSON response
             ObjectMapper objectMapper = new ObjectMapper();
@@ -241,31 +241,31 @@ public class RunController {
         }
 
         // Sort the search results based on the user's selection
-        if (newestoldest.equals("Oldest")) {
+        if (newestOldest.equals("Oldest")) {
             dataList.sort(Comparator.comparing(Data::getPublishedDate));
         } else {
             dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         }
 
-        List<String> yearlist = new ArrayList<String>();
+        List<String> yearList = new ArrayList<String>();
         for (Data data : getData.getData()) {
-            if (!yearlist.contains(data.getPublishedDate().substring(0, 4))) {
-                yearlist.add(data.getPublishedDate().substring(0, 4));
-                yearlist.sort(Comparator.reverseOrder());
+            if (!yearList.contains(data.getPublishedDate().substring(0, 4))) {
+                yearList.add(data.getPublishedDate().substring(0, 4));
+                yearList.sort(Comparator.reverseOrder());
             }
         }
-        yearlist.sort(Comparator.reverseOrder());
-        if (yearlist.contains(year) == false) {
+        yearList.sort(Comparator.reverseOrder());
+        if (yearList.contains(year) == false) {
             year = "Year";
         }
         if (!year.equals("Year")) {
-            List<Data> temp = new ArrayList<Data>();
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getPublishedDate().substring(0, 4).equals(year)) {
-                    temp.add(data);
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
         List<String> monthlist = new ArrayList<String>();
@@ -280,13 +280,13 @@ public class RunController {
             month = "Month";
         }
         if (!month.equals("Month")) {
-            List<Data> temp = new ArrayList<Data>();
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getPublishedDate().substring(5, 7).equals(month)) {
-                    temp.add(data);
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
         List<String> websitelist = new ArrayList<String>();
@@ -296,72 +296,72 @@ public class RunController {
             }
         }
         websitelist.sort(Comparator.naturalOrder());
-        if (websitelist.contains(selectwebsite) == false) {
-            selectwebsite = "All";
+        if (websitelist.contains(selectWebsite) == false) {
+            selectWebsite = "All";
         }
-        if (!selectwebsite.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        if (!selectWebsite.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getSourceWebsite().equals(selectwebsite)) {
-                    temp.add(data);
+                if (data.getSourceWebsite().equals(selectWebsite)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
-        List<String> writerlist = new ArrayList<String>();
+        List<String> writerList = new ArrayList<String>();
         for (Data data : dataList) {
-            if (!writerlist.contains(data.getAuthor())) {
-                writerlist.add(data.getAuthor());
+            if (!writerList.contains(data.getAuthor())) {
+                writerList.add(data.getAuthor());
             }
         }
-        writerlist.sort(Comparator.naturalOrder());
-        if (writerlist.contains(selectwriter) == false) {
-            selectwriter = "All";
+        writerList.sort(Comparator.naturalOrder());
+        if (writerList.contains(selectWriter) == false) {
+            selectWriter = "All";
         }
-        if (!selectwriter.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        if (!selectWriter.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getAuthor().equals(selectwriter)) {
-                    temp.add(data);
+                if (data.getAuthor().equals(selectWriter)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
-        List<String> typelist = new ArrayList<String>();
+        List<String> typeList = new ArrayList<String>();
         for (Data data : dataList) {
-            if (!typelist.contains(data.getType())) {
-                typelist.add(data.getType());
+            if (!typeList.contains(data.getType())) {
+                typeList.add(data.getType());
             }
         }
-        typelist.sort(Comparator.naturalOrder());
-        if (typelist.contains(selecttype) == false) {
-            selecttype = "All";
+        typeList.sort(Comparator.naturalOrder());
+        if (typeList.contains(selectType) == false) {
+            selectType = "All";
         }
-        if (!selecttype.equals("All")) {
-            List<Data> temp = new ArrayList<Data>();
+        if (!selectType.equals("All")) {
+            List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
-                if (data.getType().equals(selecttype)) {
-                    temp.add(data);
+                if (data.getType().equals(selectType)) {
+                    dataListInProcess.add(data);
                 }
             }
-            dataList = temp;
+            dataList = dataListInProcess;
         }
 
-        model.addAttribute("newestoldest", newestoldest);
-        model.addAttribute("yearlist", yearlist);
-        model.addAttribute("searchkey", searchkey);
+        model.addAttribute("newestoldest", newestOldest);
+        model.addAttribute("yearlist", yearList);
+        model.addAttribute("searchkey", searchKey);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
         model.addAttribute("resultCount", dataList.size());
         model.addAttribute("result", dataList);
         model.addAttribute("websitelist", websitelist);
-        model.addAttribute("selectwebsite", selectwebsite);
-        model.addAttribute("writerlist", writerlist);
-        model.addAttribute("selectwriter", selectwriter);
-        model.addAttribute("typelist", typelist);
-        model.addAttribute("selecttype", selecttype);
+        model.addAttribute("selectwebsite", selectWebsite);
+        model.addAttribute("writerlist", writerList);
+        model.addAttribute("selectwriter", selectWriter);
+        model.addAttribute("typelist", typeList);
+        model.addAttribute("selecttype", selectType);
 
         return "search";
     }
