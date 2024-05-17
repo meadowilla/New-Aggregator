@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class RunController {
     @GetMapping("/home")
-        public String home(ModelMap model) {
+    public String home(ModelMap model) {
         GetData getData = new GetData();
         List<String> websitelist = new ArrayList<String>();
         for (Data data : getData.getData()) {
@@ -36,19 +36,17 @@ public class RunController {
         }
         dataForSpecificWebsite = temp;
 
-
         model.addAttribute("news", getData.getData());
         model.addAttribute("websitelist", websitelist);
         model.addAttribute("selectwebsite", "The Block");
         model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
-
 
         return "home";
     }
 
     @PostMapping("/home")
     public String homePost(@RequestParam(value = "selectwebsite", defaultValue = "The Block") String selectwebsite,
-                            ModelMap model) throws JsonMappingException, JsonProcessingException {
+            ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         List<Data> dataList = new ArrayList<Data>();
         dataList = new GetData().getData();
@@ -78,47 +76,47 @@ public class RunController {
         return "home";
     }
 
-
     @GetMapping("/search")
-    public String searchPage(@RequestParam(value="searchkey", required = false) String searchkey,
-                                @RequestParam(value = "year", defaultValue = "Year") String year,
-                                @RequestParam(value = "month", defaultValue = "Month") String month,
-                                @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
-                                @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
-                                @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
-                                @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
-                                ModelMap model) throws JsonMappingException, JsonProcessingException {
+    public String searchPage(@RequestParam(value = "searchkey", required = false) String searchkey,
+            @RequestParam(value = "year", defaultValue = "Year") String year,
+            @RequestParam(value = "month", defaultValue = "Month") String month,
+            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
+            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
+            @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
+            @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
+            ModelMap model) throws JsonMappingException, JsonProcessingException {
 
-    // If the search key is empty, display all result in database
-    // Otherwise, get search results from the API
+        // If the search key is empty, display all result in database
+        // Otherwise, get search results from the API
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
         if (searchkey.equals("")) {
             dataList = getData.getData();
             searchkey = "All";
-        }
-        else {
+        } else {
             // Get search results from the API
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
-            // Parse the JSON response 
+            String result = restTemplate.getForObject(
+                    "http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month,
+                    String.class);
+            // Parse the JSON response
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(result);
             // Create a list of Data objects to store the search results
             for (JsonNode node : jsonNode) {
-                    Data data = new Data();
-                    data.setLink(node.get(0).asText() );
-                    data.setSourceWebsite(node.get(1).asText());
-                    data.setWebsite(node.get(2).asText());
-                    data.setTitle(node.get(3).asText());
-                    data.setDescription(node.get(4).asText());
-                    data.setAuthor(node.get(5).asText());
-                    data.setPublishedDate(node.get(6).asText());
-                    data.setType(node.get(7).asText());
-                    data.setImage(node.get(8).asText());
-                    dataList.add(data);
+                Data data = new Data();
+                data.setLink(node.get(0).asText());
+                data.setSourceWebsite(node.get(1).asText());
+                data.setWebsite(node.get(2).asText());
+                data.setTitle(node.get(3).asText());
+                data.setDescription(node.get(4).asText());
+                data.setAuthor(node.get(5).asText());
+                data.setPublishedDate(node.get(6).asText());
+                data.setType(node.get(7).asText());
+                data.setImage(node.get(8).asText());
+                dataList.add(data);
             }
-        }  
+        }
         // Sort the search results based on the user's selection
         if (newestoldest.equals("Oldest")) {
             dataList.sort(Comparator.comparing(Data::getPublishedDate));
@@ -185,8 +183,6 @@ public class RunController {
             dataList = temp;
         }
 
-
-
         model.addAttribute("newestoldest", newestoldest);
         model.addAttribute("yearlist", yearlist);
         model.addAttribute("searchkey", searchkey);
@@ -202,43 +198,45 @@ public class RunController {
         model.addAttribute("selecttype", selecttype);
 
         return "search";
-    }    
+    }
+
     @PostMapping("/search")
-    public String search(@RequestParam(value="searchkey", required = true) String searchkey,
-                                @RequestParam(value = "year", defaultValue = "Year") String year,
-                                @RequestParam(value = "month", defaultValue = "Month") String month,
-                                @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
-                                @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
-                                @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
-                                @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
-                                ModelMap model) throws JsonMappingException, JsonProcessingException {
+    public String search(@RequestParam(value = "searchkey", required = true) String searchkey,
+            @RequestParam(value = "year", defaultValue = "Year") String year,
+            @RequestParam(value = "month", defaultValue = "Month") String month,
+            @RequestParam(value = "newestoldest", defaultValue = "Newest") String newestoldest,
+            @RequestParam(value = "selectwebsite", defaultValue = "All") String selectwebsite,
+            @RequestParam(value = "selectwriter", defaultValue = "All") String selectwriter,
+            @RequestParam(value = "selecttype", defaultValue = "All") String selecttype,
+            ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        if (searchkey.equals("") || (searchkey.equals("All")))  {
+        if (searchkey.equals("") || (searchkey.equals("All"))) {
             dataList = getData.getData();
             searchkey = "All";
-        }
-        else {
+        } else {
             // Get search results from the API
             RestTemplate restTemplate = new RestTemplate();
-            String result = restTemplate.getForObject("http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month, String.class);
-            // Parse the JSON response 
+            String result = restTemplate.getForObject(
+                    "http://localhost:5000/search?searchkey=" + searchkey + "&year=" + year + "&month=" + month,
+                    String.class);
+            // Parse the JSON response
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(result);
             // Create a list of Data objects to store the search results
             for (JsonNode node : jsonNode) {
-                    Data data = new Data();
-                    data.setLink(node.get(0).asText() );
-                    data.setSourceWebsite(node.get(1).asText());
-                    data.setWebsite(node.get(2).asText());
-                    data.setTitle(node.get(3).asText());
-                    data.setDescription(node.get(4).asText());
-                    data.setAuthor(node.get(5).asText());
-                    data.setPublishedDate(node.get(6).asText());
-                    data.setType(node.get(7).asText());
-                    data.setImage(node.get(8).asText());
-                    dataList.add(data);
+                Data data = new Data();
+                data.setLink(node.get(0).asText());
+                data.setSourceWebsite(node.get(1).asText());
+                data.setWebsite(node.get(2).asText());
+                data.setTitle(node.get(3).asText());
+                data.setDescription(node.get(4).asText());
+                data.setAuthor(node.get(5).asText());
+                data.setPublishedDate(node.get(6).asText());
+                data.setType(node.get(7).asText());
+                data.setImage(node.get(8).asText());
+                dataList.add(data);
             }
         }
 
@@ -248,7 +246,6 @@ public class RunController {
         } else {
             dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
         }
-        
 
         List<String> yearlist = new ArrayList<String>();
         for (Data data : getData.getData()) {
@@ -258,7 +255,7 @@ public class RunController {
             }
         }
         yearlist.sort(Comparator.reverseOrder());
-        if(yearlist.contains(year) == false){
+        if (yearlist.contains(year) == false) {
             year = "Year";
         }
         if (!year.equals("Year")) {
@@ -279,7 +276,7 @@ public class RunController {
             }
         }
         monthlist.sort(Comparator.naturalOrder());
-        if(monthlist.contains(month) == false){
+        if (monthlist.contains(month) == false) {
             month = "Month";
         }
         if (!month.equals("Month")) {
@@ -291,7 +288,6 @@ public class RunController {
             }
             dataList = temp;
         }
-        
 
         List<String> websitelist = new ArrayList<String>();
         for (Data data : dataList) {
@@ -300,7 +296,7 @@ public class RunController {
             }
         }
         websitelist.sort(Comparator.naturalOrder());
-        if(websitelist.contains(selectwebsite) == false){
+        if (websitelist.contains(selectwebsite) == false) {
             selectwebsite = "All";
         }
         if (!selectwebsite.equals("All")) {
@@ -320,7 +316,7 @@ public class RunController {
             }
         }
         writerlist.sort(Comparator.naturalOrder());
-        if(writerlist.contains(selectwriter) == false){
+        if (writerlist.contains(selectwriter) == false) {
             selectwriter = "All";
         }
         if (!selectwriter.equals("All")) {
@@ -340,7 +336,7 @@ public class RunController {
             }
         }
         typelist.sort(Comparator.naturalOrder());
-        if(typelist.contains(selecttype) == false){
+        if (typelist.contains(selecttype) == false) {
             selecttype = "All";
         }
         if (!selecttype.equals("All")) {
@@ -352,7 +348,7 @@ public class RunController {
             }
             dataList = temp;
         }
-        
+
         model.addAttribute("newestoldest", newestoldest);
         model.addAttribute("yearlist", yearlist);
         model.addAttribute("searchkey", searchkey);
@@ -368,6 +364,6 @@ public class RunController {
         model.addAttribute("selecttype", selecttype);
 
         return "search";
-    }    
+    }
 
 }
