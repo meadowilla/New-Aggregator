@@ -51,12 +51,12 @@ public class RunController {
 
     @PostMapping("/home")
     public String homePost(@RequestParam(value = "selectWebsite", defaultValue = "The Block") String selectWebsite,
-                            ModelMap model) throws JsonMappingException, JsonProcessingException {
+            ModelMap model) throws JsonMappingException, JsonProcessingException {
         // Get the data from the CSV file
         List<Data> dataList = new ArrayList<Data>();
         dataList = new GetData().getData();
         dataList.sort(Comparator.comparing(Data::getPublishedDate).reversed());
-        // Get data for chosen website 
+        // Get data for chosen website
         List<Data> dataForSpecificWebsite = new ArrayList<Data>();
         dataForSpecificWebsite = new GetData().getData();
         List<String> websiteList = new ArrayList<String>();
@@ -83,21 +83,23 @@ public class RunController {
         return "home";
     }
 
-    // The search page is redirected to when the user clicks on the search button from home page
+    // The search page is redirected to when the user clicks on the search button
+    // from home page
     @GetMapping("/search")
     public String search(@RequestParam(value = "searchKey", required = false) String searchKey,
-                            @RequestParam(value = "year", defaultValue = "Year") String year,
-                            @RequestParam(value = "month", defaultValue = "Month") String month,
-                            @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
-                            @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
-                            @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
-                            @RequestParam(value = "selectType", defaultValue = "All") String selectType,
-                            ModelMap model) throws JsonMappingException, JsonProcessingException {
+            @RequestParam(value = "year", defaultValue = "Year") String year,
+            @RequestParam(value = "month", defaultValue = "Month") String month,
+            @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
+            @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
+            @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
+            @RequestParam(value = "selectType", defaultValue = "All") String selectType,
+            ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         // Create a list of Data objects to store the search results
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        // If the search key is empty, display all the data, else display the search results
+        // If the search key is empty, display all the data, else display the search
+        // results
         if (searchKey.equals("")) {
             dataList = getData.getData();
             searchKey = "All";
@@ -214,18 +216,19 @@ public class RunController {
 
     @PostMapping("/search")
     public String searchPost(@RequestParam(value = "searchKey", required = true) String searchKey,
-                            @RequestParam(value = "year", defaultValue = "Year") String year,
-                            @RequestParam(value = "month", defaultValue = "Month") String month,
-                            @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
-                            @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
-                            @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
-                            @RequestParam(value = "selectType", defaultValue = "All") String selectType,
-                            ModelMap model) throws JsonMappingException, JsonProcessingException {
+            @RequestParam(value = "year", defaultValue = "Year") String year,
+            @RequestParam(value = "month", defaultValue = "Month") String month,
+            @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
+            @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
+            @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
+            @RequestParam(value = "selectType", defaultValue = "All") String selectType,
+            ModelMap model) throws JsonMappingException, JsonProcessingException {
 
         // Create a list of Data objects to store the search results
         GetData getData = new GetData();
         List<Data> dataList = new ArrayList<Data>();
-        // If the search key is empty, display all the data, else display the search results
+        // If the search key is empty, display all the data, else display the search
+        // results
         if (searchKey.equals("") || (searchKey.equals("All"))) {
             dataList = getData.getData();
             searchKey = "All";
@@ -269,9 +272,6 @@ public class RunController {
             }
         }
         // Sort the search results based on the user's selection
-        if (yearList.contains(year) == false) {
-            year = "Year";
-        }
         if (!year.equals("Year")) {
             List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
@@ -281,18 +281,8 @@ public class RunController {
             }
             dataList = dataListInProcess;
         }
-        // Get the list of months for the dropdown menu
-        List<String> monthlist = new ArrayList<String>();
-        for (Data data : new GetData().getData()) {
-            if (!monthlist.contains(data.getPublishedDate().substring(5, 7))) {
-                monthlist.add(data.getPublishedDate().substring(5, 7));
-                monthlist.sort(Comparator.naturalOrder());
-            }
-        }
-        // Sort the search results based on the user's selection
-        if (monthlist.contains(month) == false) {
-            month = "Month";
-        }
+
+        // // Sort the search results based on the user's selection
         if (!month.equals("Month")) {
             List<Data> dataListInProcess = new ArrayList<Data>();
             for (Data data : dataList) {
