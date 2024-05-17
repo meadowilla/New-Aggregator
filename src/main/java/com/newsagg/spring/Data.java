@@ -1,4 +1,5 @@
 package com.newsagg.spring;
+// Link,Source website,Website,Title,Description,Author,Published date,Type,Image
 public class Data {
     private String link;
     private String sourceWebsite;
