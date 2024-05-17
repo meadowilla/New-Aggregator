@@ -28,13 +28,13 @@ public class RunController {
         List<Data> dataForSpecificWebsite = new ArrayList<Data>();
         dataForSpecificWebsite = new GetData().getData();
         dataForSpecificWebsite.sort(Comparator.comparing(Data::getPublishedDate).reversed());
-        List<Data> temporaryData = new ArrayList<Data>();
+        List<Data> temp = new ArrayList<Data>();
         for (Data data : getData.getData()) {
             if (data.getSourceWebsite().equals("The Block")) {
-                temporaryData.add(data);
+                temp.add(data);
             }
         }
-        dataForSpecificWebsite = temporaryData;
+        dataForSpecificWebsite = temp;
 
         model.addAttribute("news", getData.getData());
         model.addAttribute("websitelist", websitelist);
@@ -60,13 +60,13 @@ public class RunController {
             }
         }
         if (!selectwebsite.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getSourceWebsite().equals(selectwebsite)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataForSpecificWebsite = temporaryData;
+            dataForSpecificWebsite = temp;
         }
 
         model.addAttribute("news", dataList);
@@ -140,13 +140,13 @@ public class RunController {
         }
         websitelist.sort(Comparator.naturalOrder());
         if (!selectwebsite.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getSourceWebsite().equals(selectwebsite)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         List<String> writerlist = new ArrayList<String>();
@@ -157,13 +157,13 @@ public class RunController {
         }
         writerlist.sort(Comparator.naturalOrder());
         if (!selectwriter.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getAuthor().equals(selectwriter)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         List<String> typelist = new ArrayList<String>();
@@ -174,13 +174,13 @@ public class RunController {
         }
         typelist.sort(Comparator.naturalOrder());
         if (!selecttype.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getType().equals(selecttype)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         model.addAttribute("newestoldest", newestoldest);
@@ -259,13 +259,13 @@ public class RunController {
             year = "Year";
         }
         if (!year.equals("Year")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getPublishedDate().substring(0, 4).equals(year)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         List<String> monthlist = new ArrayList<String>();
@@ -280,13 +280,13 @@ public class RunController {
             month = "Month";
         }
         if (!month.equals("Month")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getPublishedDate().substring(5, 7).equals(month)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         List<String> websitelist = new ArrayList<String>();
@@ -300,13 +300,13 @@ public class RunController {
             selectwebsite = "All";
         }
         if (!selectwebsite.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getSourceWebsite().equals(selectwebsite)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         List<String> writerlist = new ArrayList<String>();
@@ -320,13 +320,13 @@ public class RunController {
             selectwriter = "All";
         }
         if (!selectwriter.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getAuthor().equals(selectwriter)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         List<String> typelist = new ArrayList<String>();
@@ -340,13 +340,13 @@ public class RunController {
             selecttype = "All";
         }
         if (!selecttype.equals("All")) {
-            List<Data> temporaryData = new ArrayList<Data>();
+            List<Data> temp = new ArrayList<Data>();
             for (Data data : dataList) {
                 if (data.getType().equals(selecttype)) {
-                    temporaryData.add(data);
+                    temp.add(data);
                 }
             }
-            dataList = temporaryData;
+            dataList = temp;
         }
 
         model.addAttribute("newestoldest", newestoldest);
