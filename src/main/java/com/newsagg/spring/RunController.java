@@ -60,15 +60,27 @@ public class RunController {
         if (!month.equals("Month")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "month", month);
         }
+
         model.addAttribute("websitelist", newsService.getWebsiteList(searchResults));
+        if (!newsService.getWebsiteList(searchResults).contains(selectWebsite)) {
+            selectWebsite = "All";
+        }
         if (!selectWebsite.equals("All")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "website", selectWebsite);
         }
+
         model.addAttribute("writerList", newsService.getDistinctAuthors(searchResults));
+        if (!newsService.getDistinctAuthors(searchResults).contains(selectWriter)) {
+            selectWriter = "All";
+        }
         if (!selectWriter.equals("All")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "author", selectWriter);
         }
+
         model.addAttribute("typeList", newsService.getDistinctTypes(searchResults));
+        if (!newsService.getDistinctTypes(searchResults).contains(selectType)) {
+            selectType = "All";
+        }
         if (!selectType.equals("All")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "type", selectType);
         }
