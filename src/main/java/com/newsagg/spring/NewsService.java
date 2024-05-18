@@ -29,37 +29,47 @@ public class NewsService {
     }
 
     public List<Data> getDataForSpecificWebsite(String website, List<Data> dataList) {
-        List<Data> dataForSpecificWebsite = new ArrayList<>();
-        for (Data data : dataList) {
-            if (data.getSourceWebsite().equals(website)) {
-                dataForSpecificWebsite.add(data);
+        if (website.equals("All")) {
+            return dataList;
+        } else {
+            List<Data> dataForSpecificWebsite = new ArrayList<>();
+            for (Data data : dataList) {
+                if (data.getSourceWebsite().equals(website)) {
+                    dataForSpecificWebsite.add(data);
+                }
             }
+            return dataForSpecificWebsite;
         }
-        return dataForSpecificWebsite;
     }
 
     public List<Data> getSearchResults(String searchKey, String year, String month) throws JsonProcessingException {
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(
-                "http://localhost:5000/search?searchkey=" + searchKey + "&year=" + year + "&month=" + month,
-                String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(result);
         List<Data> dataList = new ArrayList<>();
-        for (JsonNode node : jsonNode) {
-            Data data = new Data();
-            data.setLink(node.get(0).asText());
-            data.setSourceWebsite(node.get(1).asText());
-            data.setWebsite(node.get(2).asText());
-            data.setTitle(node.get(3).asText());
-            data.setDescription(node.get(4).asText());
-            data.setAuthor(node.get(5).asText());
-            data.setPublishedDate(node.get(6).asText());
-            data.setType(node.get(7).asText());
-            data.setImage(node.get(8).asText());
-            dataList.add(data);
+        if (searchKey == null || searchKey.isEmpty() || searchKey.equals("All")) {
+            dataList = getAllData();
+            return dataList;
         }
-        return dataList;
+        else {
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(
+                    "http://localhost:5000/search?searchkey=" + searchKey + "&year=" + year + "&month=" + month,
+                    String.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(result);
+            for (JsonNode node : jsonNode) {
+                Data data = new Data();
+                data.setLink(node.get(0).asText());
+                data.setSourceWebsite(node.get(1).asText());
+                data.setWebsite(node.get(2).asText());
+                data.setTitle(node.get(3).asText());
+                data.setDescription(node.get(4).asText());
+                data.setAuthor(node.get(5).asText());
+                data.setPublishedDate(node.get(6).asText());
+                data.setType(node.get(7).asText());
+                data.setImage(node.get(8).asText());
+                dataList.add(data);
+            }
+            return dataList;
+        }
     }
 
     public List<String> getDistinctYears(List<Data> dataList) {
