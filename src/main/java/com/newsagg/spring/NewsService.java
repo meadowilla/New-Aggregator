@@ -13,10 +13,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class NewsService {
 
-    private final GetData getData = new GetData();
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final GetData getData;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
+    public NewsService(GetData getData, RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.getData = getData;
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
     public List<Data> getAllData() {
         return getData.getData();
     }

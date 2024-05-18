@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.apache.commons.csv.*;
+import org.springframework.stereotype.Service;
 
 // Link,Source website,Website,Title,Description,Author,Published date,Type,Image
 // This class reads the data from the CSV file and returns a list of Data objects
+@Service
 public class GetData {
     public List<Data> getData() {
         String csvFile = "src\\main\\resources\\test_year_search.csv";

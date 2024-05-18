@@ -8,14 +8,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class RunController {
 
     @Autowired
-    private NewsService newsService;
+    private NewsService newsService = new NewsService(new GetData(), new RestTemplate(), new ObjectMapper());
 
     @GetMapping("/home")
     public String home(@RequestParam(value = "selectWebsite", defaultValue = "The Block") String selectWebsite,
