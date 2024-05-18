@@ -41,7 +41,7 @@ public class RunController {
 
     @PostMapping("/home")
     public String homePost(@RequestParam(value = "selectWebsite", defaultValue = "The Block") String selectWebsite,
-                           ModelMap model) throws JsonMappingException, JsonProcessingException {
+    ModelMap model) throws JsonMappingException, JsonProcessingException {
         return home(selectWebsite, model);
     }
     
@@ -55,18 +55,19 @@ public class RunController {
     @RequestParam(value = "selectType", defaultValue = "All") String selectType,
     ModelMap model) throws JsonMappingException, JsonProcessingException {
         
+        List<Data> dataList = newsService.getAllData();
         String searchKeyForDisplay = searchKey == null || searchKey.isEmpty() ? "All" : searchKey;
         List<Data> searchResults = newsService.getSearchResults(searchKey, year, month);
         searchResults = newestOldest.equals("Oldest") ? searchResults.stream().sorted(Comparator.comparing(Data::getPublishedDate)).toList() : searchResults.stream().sorted(Comparator.comparing(Data::getPublishedDate).reversed()).toList();
         
-        model.addAttribute("yearList", newsService.getDistinctYears(searchResults));
+        model.addAttribute("yearList", newsService.getDistinctYears(dataList));
         if (!year.equals("Year")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "year", year);
         }
         if (!month.equals("Month")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "month", month);
         }
-
+        
         model.addAttribute("websitelist", newsService.getWebsiteList(searchResults));
         if (!newsService.getWebsiteList(searchResults).contains(selectWebsite)) {
             selectWebsite = "All";
@@ -74,7 +75,7 @@ public class RunController {
         if (!selectWebsite.equals("All")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "website", selectWebsite);
         }
-
+        
         model.addAttribute("writerList", newsService.getDistinctAuthors(searchResults));
         if (!newsService.getDistinctAuthors(searchResults).contains(selectWriter)) {
             selectWriter = "All";
@@ -82,7 +83,7 @@ public class RunController {
         if (!selectWriter.equals("All")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "author", selectWriter);
         }
-
+        
         model.addAttribute("typeList", newsService.getDistinctTypes(searchResults));
         if (!newsService.getDistinctTypes(searchResults).contains(selectType)) {
             selectType = "All";
@@ -90,7 +91,7 @@ public class RunController {
         if (!selectType.equals("All")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "type", selectType);
         }
-
+        
         model.addAttribute("newestOldest", newestOldest);
         model.addAttribute("searchKey", searchKeyForDisplay);
         model.addAttribute("year", year);
@@ -100,17 +101,17 @@ public class RunController {
         model.addAttribute("selectWebsite", selectWebsite);
         model.addAttribute("selectWriter", selectWriter);
         model.addAttribute("selectType", selectType);
-
+        
         return "search";
     }
-
+    
     @PostMapping("/search")
     public String searchPost(@RequestParam(value = "searchKey", required = true) String searchKey,
-                             @RequestParam(value = "year", defaultValue = "Year") String year,
-                             @RequestParam(value = "month", defaultValue = "Month") String month,
-                             @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
-                             @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
-                             @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
+    @RequestParam(value = "year", defaultValue = "Year") String year,
+    @RequestParam(value = "month", defaultValue = "Month") String month,
+    @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
+    @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
+    @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
                              @RequestParam(value = "selectType", defaultValue = "All") String selectType,
                              ModelMap model) throws JsonMappingException, JsonProcessingException {
 
