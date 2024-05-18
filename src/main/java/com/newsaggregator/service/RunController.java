@@ -26,8 +26,11 @@ public class RunController {
         List<Data> allData = newsService.getAllData();
         List<String> websiteList = newsService.getWebsiteList(allData);
         List<Data> dataForSpecificWebsite = newsService.filterDataByAttribute(allData, "website", selectWebsite);
-        dataForSpecificWebsite.sort(Comparator.comparing(Data::getPublishedDate).reversed());
-
+        if (selectWebsite.equals("All")) {
+            dataForSpecificWebsite = allData;
+        } else {
+            dataForSpecificWebsite = newsService.filterDataByAttribute(allData, "website", selectWebsite);
+        }
         model.addAttribute("news", allData);
         model.addAttribute("websiteList", websiteList);
         model.addAttribute("selectWebsite", selectWebsite);
@@ -41,22 +44,22 @@ public class RunController {
                            ModelMap model) throws JsonMappingException, JsonProcessingException {
         return home(selectWebsite, model);
     }
-
+    
     @GetMapping("/search")
     public String search(@RequestParam(value = "searchKey", required = false) String searchKey,
-                         @RequestParam(value = "year", defaultValue = "Year") String year,
-                         @RequestParam(value = "month", defaultValue = "Month") String month,
-                         @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
-                         @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
-                         @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
-                         @RequestParam(value = "selectType", defaultValue = "All") String selectType,
-                         ModelMap model) throws JsonMappingException, JsonProcessingException {
-
-        List<Data> allData = newsService.getAllData();
+    @RequestParam(value = "year", defaultValue = "Year") String year,
+    @RequestParam(value = "month", defaultValue = "Month") String month,
+    @RequestParam(value = "newestOldest", defaultValue = "Newest") String newestOldest,
+    @RequestParam(value = "selectWebsite", defaultValue = "All") String selectWebsite,
+    @RequestParam(value = "selectWriter", defaultValue = "All") String selectWriter,
+    @RequestParam(value = "selectType", defaultValue = "All") String selectType,
+    ModelMap model) throws JsonMappingException, JsonProcessingException {
+        
         String searchKeyForDisplay = searchKey == null || searchKey.isEmpty() ? "All" : searchKey;
         List<Data> searchResults = newsService.getSearchResults(searchKey, year, month);
         searchResults = newestOldest.equals("Oldest") ? searchResults.stream().sorted(Comparator.comparing(Data::getPublishedDate)).toList() : searchResults.stream().sorted(Comparator.comparing(Data::getPublishedDate).reversed()).toList();
-
+        
+        model.addAttribute("yearList", newsService.getDistinctYears(searchResults));
         if (!year.equals("Year")) {
             searchResults = newsService.filterDataByAttribute(searchResults, "year", year);
         }
@@ -89,7 +92,6 @@ public class RunController {
         }
 
         model.addAttribute("newestOldest", newestOldest);
-        model.addAttribute("yearList", newsService.getDistinctYears(allData));
         model.addAttribute("searchKey", searchKeyForDisplay);
         model.addAttribute("year", year);
         model.addAttribute("month", month);
@@ -115,3 +117,4 @@ public class RunController {
         return search(searchKey, year, month, newestOldest, selectWebsite, selectWriter, selectType, model);
     }
 }
+
