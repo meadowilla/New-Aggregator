@@ -182,6 +182,12 @@ a.home-button:hover {
 .news-description {
     font-size: 15px;
     color: #ffffffdc; /* Light text */
+    max-height: 100px; /* Adjust as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to display before cutting off text */
+    -webkit-box-orient: vertical;
     
 }
 

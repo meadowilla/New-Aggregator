@@ -25,7 +25,7 @@ public class RunController {
                         ModelMap model) {
         List<Data> allData = newsService.getAllData();
         List<String> websiteList = newsService.getWebsiteList(allData);
-        List<Data> dataForSpecificWebsite = newsService.getDataForSpecificWebsite(selectWebsite, allData);
+        List<Data> dataForSpecificWebsite = newsService.filterDataByAttribute(allData, "website", selectWebsite);
         dataForSpecificWebsite.sort(Comparator.comparing(Data::getPublishedDate).reversed());
 
         model.addAttribute("news", allData);

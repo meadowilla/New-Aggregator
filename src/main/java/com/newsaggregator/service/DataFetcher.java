@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DataFetcher {
     public List<Data> getData() {
-        String csvFile = "src\\main\\resources\\test_year_search.csv";
+        String csvFile = "src\\main\\resources\\data.csv";
         List<Data> dataList = new ArrayList<Data>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             br.readLine();

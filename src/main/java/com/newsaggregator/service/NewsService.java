@@ -33,40 +33,34 @@ public class NewsService {
                 .collect(Collectors.toList());
     }
 
-    public List<Data> getDataForSpecificWebsite(String website, List<Data> dataList) {
-        return website.equals("All") ? dataList :
-                dataList.stream()
-                        .filter(data -> data.getSourceWebsite().equals(website))
-                        .collect(Collectors.toList());
-    }
-public List<Data> getSearchResults(String searchKey, String year, String month) throws JsonProcessingException {
-    List<Data> dataList = new ArrayList<>();
-    
-    if (searchKey == null || searchKey.isEmpty() || searchKey.equals("All")) {
-        dataList = getAllData();
-    } else {
-        String result = restTemplate.getForObject(
-                "http://localhost:5000/search?searchkey=" + searchKey + "&year=" + year + "&month=" + month,
-                String.class);
-        JsonNode jsonNode = objectMapper.readTree(result);
+    public List<Data> getSearchResults(String searchKey, String year, String month) throws JsonProcessingException {
+        List<Data> dataList = new ArrayList<>();
         
-        for (JsonNode node : jsonNode) {
-            Data data = new Data();
-            data.setLink(node.get(0).asText());
-            data.setSourceWebsite(node.get(1).asText());
-            data.setWebsite(node.get(2).asText());
-            data.setTitle(node.get(3).asText());
-            data.setDescription(node.get(4).asText());
-            data.setAuthor(node.get(5).asText());
-            data.setPublishedDate(node.get(6).asText());
-            data.setType(node.get(7).asText());
-            data.setImage(node.get(8).asText());
-            dataList.add(data);
+        if (searchKey == null || searchKey.isEmpty() || searchKey.equals("All")) {
+            dataList = getAllData();
+        } else {
+            String result = restTemplate.getForObject(
+                    "http://localhost:5000/search?searchkey=" + searchKey + "&year=" + year + "&month=" + month,
+                    String.class);
+            JsonNode jsonNode = objectMapper.readTree(result);
+            
+            for (JsonNode node : jsonNode) {
+                Data data = new Data();
+                data.setLink(node.get(0).asText());
+                data.setSourceWebsite(node.get(1).asText());
+                data.setWebsite(node.get(2).asText());
+                data.setTitle(node.get(3).asText());
+                data.setDescription(node.get(4).asText());
+                data.setAuthor(node.get(5).asText());
+                data.setPublishedDate(node.get(6).asText());
+                data.setType(node.get(7).asText());
+                data.setImage(node.get(8).asText());
+                dataList.add(data);
+            }
         }
+        
+        return dataList;
     }
-    
-    return dataList;
-}
 
 
     public List<String> getDistinctYears(List<Data> dataList) {
