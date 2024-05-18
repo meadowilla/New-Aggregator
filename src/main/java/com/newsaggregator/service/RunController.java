@@ -30,7 +30,7 @@ public class RunController {
 
         model.addAttribute("news", allData);
         model.addAttribute("websiteList", websiteList);
-        model.addAttribute("selectWebsite", "The Block");
+        model.addAttribute("selectWebsite", selectWebsite);
         model.addAttribute("dataForSpecificWebsite", dataForSpecificWebsite);
 
         return "home";
