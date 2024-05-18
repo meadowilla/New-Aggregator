@@ -1,4 +1,4 @@
-package com.newsagg.spring;
+package com.newsaggregator.service;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class RunController {
 
     @Autowired
-    private NewsService newsService = new NewsService(new GetData(), new RestTemplate(), new ObjectMapper());
+    private NewsService newsService = new NewsService(new DataFetcher(), new RestTemplate(), new ObjectMapper());
 
     @GetMapping("/home")
     public String home(@RequestParam(value = "selectWebsite", defaultValue = "The Block") String selectWebsite,

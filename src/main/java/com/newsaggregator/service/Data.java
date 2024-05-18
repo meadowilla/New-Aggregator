@@ -1,4 +1,4 @@
-package com.newsagg.spring;
+package com.newsaggregator.service;
 // Link,Source website,Website,Title,Description,Author,Published date,Type,Image
 public class Data {
     private String link;

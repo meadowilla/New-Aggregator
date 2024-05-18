@@ -1,4 +1,4 @@
-package com.newsagg.spring;
+package com.newsaggregator.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

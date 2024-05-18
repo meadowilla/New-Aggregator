@@ -1,4 +1,4 @@
-package com.newsagg.spring;
+package com.newsaggregator.service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class NewsService {
 
-    private final GetData getData;
+    private final DataFetcher getData;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public NewsService(GetData getData, RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public NewsService(DataFetcher getData, RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.getData = getData;
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;

@@ -1,4 +1,4 @@
-package com.newsagg.spring;
+package com.newsaggregator.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

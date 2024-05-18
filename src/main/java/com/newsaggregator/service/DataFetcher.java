@@ -1,4 +1,4 @@
-package com.newsagg.spring;
+package com.newsaggregator.service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 // Link,Source website,Website,Title,Description,Author,Published date,Type,Image
 // This class reads the data from the CSV file and returns a list of Data objects
 @Service
-public class GetData {
+public class DataFetcher {
     public List<Data> getData() {
         String csvFile = "src\\main\\resources\\test_year_search.csv";
         List<Data> dataList = new ArrayList<Data>();
