@@ -1,6 +1,6 @@
 # Project Title
 
-This is a search engine project that uses both Java and Python. The Java part is a Spring Boot application, and the Python part is responsible for indexing and searching.
+This is a search engine project that uses both Java and Python. The Java part is a Spring Boot application, and the Python part is responsible for indexing, searching, filtering.
 
 ## Getting Started
 
@@ -33,9 +33,9 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Authors
 
-* **Sy** - *Create spring boot, manage to connect modules, UI* - [quansy](https://github.com/for-Ely)
-* **Awesome Teammate from IT-E15** - *Make modules and handle many hard works*
+* **Nguyen Sy Quan** - *Create spring boot, manage to connect modules, UI* - [quansy](https://github.com/for-Ely)
+* **Truong Thao Nguyen** - *Team leader, Implement algorithms for Searching* - [meadowilla](https://github.com/meadowilla)
+* **Phan Thu Ha** - *Implement algorithms for Ranking, Filtering*
+* **Nguyen Phuong Linh** - *Scrape data from websites, Draw UML diagram*
+* **Pham Nguyen Hai Nhi** - *Scrape data from websites, Design Slide & Report*
 
-## Acknowledgments
-
-* I'm gonna sleep
