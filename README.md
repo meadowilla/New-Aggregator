@@ -20,9 +20,8 @@ A step by step series of examples that tell you how to get a development environ
 
 1. Clone the repository
 2. Navigate to the project directory
-4. Run `mvnw spring-boot:run` to start the Spring Boot application
-5. Run `python Flask.py` to start the Python part
-6. You can then access the application in your browser by navigating to `http://localhost:8080/home`
+4. Run `start.bat` to start the Spring Boot application and Flask
+5. You can then access the application in your browser by navigating to `http://localhost:8080/home`
    
 
 ## Built With
