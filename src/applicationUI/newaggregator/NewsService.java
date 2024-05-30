@@ -1,4 +1,4 @@
-package com.newsaggregator.service;
+package application_ui.newaggregator;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,0 +1,331 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #28292c; /* Dark background */
+    color: #ffffff; /* Light text */
+    margin: 0;
+    padding: 0;
+}
+
+.sort {
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+    font-size: 12px;
+}
+
+a.home-button {
+    background-color: #6a6a6a98;
+    color: #ffffff; /* Light text */
+    display: inline-block;
+    padding: 9px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
+a.home-button:hover {
+    background-color: #464646b7;
+}
+
+.search-button {
+    background-color: #6a6a6a98;
+    color: #ffffff; /* Light text */
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 0px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #464646b7;
+}
+
+.search-box {
+    outline: none;
+    border: none;
+    align-self: left;
+    width:40%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #6a6a6a98;
+    color: #ffffff; /* Light text */
+    margin: 10px;
+    margin-top: 20px;
+}
+
+.search-box:hover {
+    background-color: #464646b7;
+}
+
+.search-form {
+    margin: 0 auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.searchkey {
+    font-family: sans-serif, 'Arial';
+    color: #ffffff; /* Light text */
+    font-size: 18px;
+}
+
+.result-section, .news-section {
+    padding-bottom: 20px;
+}
+
+.section-title {
+    padding-left: 5%;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+}
+
+.fromwebsite-section-title {
+
+    position: fixed;
+    top: 35px;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+    font-size: 18px;
+}
+
+.result-count {
+    padding-left: 5%;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+}
+.news-content:hover {
+    background-color: #0b0b0b7d;
+}
+
+
+.news-section {
+    margin-left: 5%;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    width: 70%;
+    background-color: #1e1e1e89;
+    border-radius: 15px;
+    padding-top: 10px;
+}
+
+.result-section {
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    width: 90%;
+    background-color: #1e1e1e89;
+    border-radius: 15px;
+    padding-top: 10px;
+}
+
+.news-item {
+    text-align: center;
+}
+
+.news-source-website {
+    font-weight: 4px;
+    color: #c3c6c4; /* Light text */
+    font-size: 12px;
+}
+
+.news-image {
+    border-radius: 10px;
+    margin: 10px;
+    width: 320px;
+    height: 200px;
+    object-fit: cover;
+    float: right;
+}
+
+.fromwebsite-image {
+    border-radius: 10px;
+    margin: 10px;
+    width: 60px;
+    height: 50px;
+    object-fit: cover;
+    float: right;
+}
+
+.fromwebsite-item {
+    text-align: center;
+}
+
+.news-content {
+    display: inline-block;
+    text-align: left;
+    border-radius: 10px;
+    padding-left: 28px;
+    width: 90%;
+    margin: 10px;
+    background-color: #1e1e1e; /* Darker background for content */
+    color: #ffffff; /* Light text */
+}
+
+.news-link {
+    word-wrap: break-word;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+}
+
+.news-title {
+    word-wrap: break-word;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+}
+
+.news-description {
+    font-size: 15px;
+    color: #ffffffdc; /* Light text */
+    max-height: 100px; /* Adjust as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to display before cutting off text */
+    -webkit-box-orient: vertical;
+    
+}
+
+.news-date-author {
+    color: #c3c6c4; /* Light text */
+    font-size: 12px;
+}
+
+.news-author {
+    color: #c3c6c4; /* Light text */
+    font-size: 12px;
+}
+.news-date {
+    color: #c3c6c4; /* Light text */
+    font-size: 12px;
+}
+
+.fromwebsite-section {
+    position: fixed;
+    right: 2%;
+    top: 110px;
+    bottom: 66px;
+    width: 20%; /* Adjust this value as needed */
+    overflow-y: auto; /* This adds a scrollbar if the content is taller than the box */
+    padding: 1em;
+    box-sizing: border-box;
+    background-color: #1e1e1e89;
+    border-radius: 15px;
+}
+
+#from {
+    font-family: 'Arial', sans-serif;
+    color: #c3c6c4b8; /* Light text */
+    font-size: 11px;
+}
+
+#by {
+    font-family: 'Arial', sans-serif;
+    color: #c3c6c4b8; /* Light text */
+    font-size: 11px;
+}
+
+.result-option {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.result-option label.sort {
+    color: #fff; /* White text color */
+    font-weight: bold;
+}
+
+.result-option select {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-top: 8px;
+    width: 10%;
+}
+
+/* Styling options */
+.result-option select option {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* White text color */
+}
+
+/* Hover effect */
+.result-option select:hover {
+    background-color: #444; /* Darker hover color */
+}
+
+/* Focus effect */
+.result-option select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow */
+}
+
+.fromwebsite-option {
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.fromwebsite-option label.sort {
+    color: #fff; /* White text color */
+    font-weight: bold;
+}
+
+.fromwebsite-option select {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 4px 10px;
+    border-radius: 5px;
+    margin-top: 8px;
+    width: 40%;
+}
+
+/* Styling options */
+.fromwebsite-option select option {
+    background-color: #333; /* Darker background color */
+    color: #fff; /* White text color */
+}
+
+/* Hover effect */
+.fromwebsite-option select:hover {
+    background-color: #444; /* Darker hover color */
+}
+
+.fromwebsite-option select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow */
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fromwebsite-content {
+    display: inline-block;
+    text-align: left;
+    border-radius: 10px;
+    padding-left: 20px;
+    width: 90%;
+    margin-bottom: 5px;
+    background-color: #1e1e1e89; /* Darker background for content */
+    color: #ffffff; /* Light text */
+}
+
+.fromwebsite-title {
+    word-wrap: break-word;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* Light text */
+    font-size: 12px;
+}
+
+.fromwebsite-content:hover {
+    background-color: #0b0b0b7d;
+}

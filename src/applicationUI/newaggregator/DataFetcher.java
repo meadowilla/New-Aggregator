@@ -1,4 +1,4 @@
-package com.newsaggregator.service;
+package application_ui.newaggregator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DataFetcher {
     public List<Data> getData() {
-        String csvFile = "src\\main\\resources\\data.csv";
+        String csvFile = "src\\application_data\\data\\data.csv";
         List<Data> dataList = new ArrayList<Data>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             br.readLine();
